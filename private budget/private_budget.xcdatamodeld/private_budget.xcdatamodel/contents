@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Automatic">
-    <entity name="Category" syncable="YES">
+    <entity name="DBCategory" representedClassName="DBCategory" syncable="YES">
         <attribute name="category_image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="category_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="category_type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="itemid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
-    <entity name="Currency" syncable="YES">
+    <entity name="DBCurrency" representedClassName="DBCurrency" syncable="YES">
         <attribute name="currency_image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="currency_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="itemid" optional="YES" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
     </entity>
-    <entity name="Planned_transactions" syncable="YES">
+    <entity name="DBPlannedTransactions" representedClassName="DBPlannedTransactions" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="attribute" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="category" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -23,7 +23,7 @@
         <attribute name="reciever" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="start_date" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
-    <entity name="Transactions" syncable="YES">
+    <entity name="DBTransactions" representedClassName="DBTransactions" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="category" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="currency" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -33,9 +33,9 @@
         <attribute name="transaction_description" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Category" positionX="189" positionY="63" width="128" height="105"/>
-        <element name="Currency" positionX="-153" positionY="27" width="128" height="88"/>
-        <element name="Planned_transactions" positionX="45" positionY="144" width="128" height="195"/>
-        <element name="Transactions" positionX="27" positionY="-69" width="128" height="150"/>
+        <element name="DBCategory" positionX="189" positionY="63" width="128" height="103"/>
+        <element name="DBCurrency" positionX="-153" positionY="27" width="128" height="88"/>
+        <element name="DBPlannedTransactions" positionX="45" positionY="144" width="128" height="193"/>
+        <element name="DBTransactions" positionX="27" positionY="-69" width="128" height="148"/>
     </elements>
 </model>
