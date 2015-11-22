@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ConstViewController.h
 //  private budget
 //
 //  Created by tuguldur purevnyam on 29.10.15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface PlannedTransactionViewController : UIViewController
 
 @end
-

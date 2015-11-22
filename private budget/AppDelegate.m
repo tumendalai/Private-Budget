@@ -7,6 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "HomeViewController.h"
+#import "PlannedTransactionViewController.h"
+#import "ReportViewController.h"
+#import "SettingsViewController.h"
+#import "AddTransactionViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +22,41 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    
+    HomeViewController *homeViewController = [[HomeViewController alloc] init];
+    PlannedTransactionViewController* plannedTransactionViewController = [[PlannedTransactionViewController alloc] init];
+    AddTransactionViewController* addTransactionViewController = [[AddTransactionViewController alloc] init];
+    ReportViewController* reportViewController = [[ReportViewController alloc] init];
+    SettingsViewController* settingsViewController = [[SettingsViewController alloc] init];
+    
+    homeViewController.title = @"Home";
+    plannedTransactionViewController.title = @"Plan";
+    addTransactionViewController.title = @"Add";
+    reportViewController.title =@"Report";
+    settingsViewController.title =@"Settings";
+    
+    [homeViewController.tabBarItem setImage:[UIImage imageNamed:@"adress_button"]];
+    [plannedTransactionViewController.tabBarItem setImage:[UIImage imageNamed:@"clock_selection"]];
+    [addTransactionViewController.tabBarItem setImage:[UIImage imageNamed:@"baraa_add"]];
+    [reportViewController.tabBarItem setImage:[UIImage imageNamed:@"grafic_button"]];
+    [settingsViewController.tabBarItem setImage:[UIImage imageNamed:@"button_settings"]];
+    
+    NSArray* controllers = [NSArray arrayWithObjects:
+                            homeViewController,
+                            plannedTransactionViewController,
+                            addTransactionViewController,
+                            reportViewController,
+                            settingsViewController, nil];
+    
+    tabBarController.viewControllers = controllers;
+    
+    self.window.rootViewController = tabBarController;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
