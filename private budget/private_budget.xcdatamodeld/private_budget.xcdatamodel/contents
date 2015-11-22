@@ -3,7 +3,7 @@
     <entity name="DBCategory" representedClassName="DBCategory" syncable="YES">
         <attribute name="category_image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="category_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="category_type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="category_type" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="itemid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="DBCurrency" representedClassName="DBCurrency" syncable="YES">

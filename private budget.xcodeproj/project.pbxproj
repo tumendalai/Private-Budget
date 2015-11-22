@@ -42,12 +42,12 @@
 		46EEA5861C01A71D00CAD336 /* DatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5851C01A71D00CAD336 /* DatabaseManager.m */; };
 		46EEA5A41C01ACEC00CAD336 /* DBCurrency+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5951C01ACEC00CAD336 /* DBCurrency+CoreDataProperties.m */; };
 		46EEA5A51C01ACEC00CAD336 /* DBCurrency.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5971C01ACEC00CAD336 /* DBCurrency.m */; };
-		46EEA5A61C01ACEC00CAD336 /* DBCategory+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5991C01ACEC00CAD336 /* DBCategory+CoreDataProperties.m */; };
-		46EEA5A71C01ACEC00CAD336 /* DBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA59B1C01ACEC00CAD336 /* DBCategory.m */; };
 		46EEA5A81C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA59D1C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.m */; };
 		46EEA5A91C01ACEC00CAD336 /* DBTransactions.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA59F1C01ACEC00CAD336 /* DBTransactions.m */; };
 		46EEA5AA1C01ACEC00CAD336 /* DBPlannedTransactions+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5A11C01ACEC00CAD336 /* DBPlannedTransactions+CoreDataProperties.m */; };
 		46EEA5AB1C01ACEC00CAD336 /* DBPlannedTransactions.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5A31C01ACEC00CAD336 /* DBPlannedTransactions.m */; };
+		46EEA5B01C01B10000CAD336 /* DBCategory+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5AD1C01B10000CAD336 /* DBCategory+CoreDataProperties.m */; };
+		46EEA5B11C01B10000CAD336 /* DBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5AF1C01B10000CAD336 /* DBCategory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,10 +119,6 @@
 		46EEA5951C01ACEC00CAD336 /* DBCurrency+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBCurrency+CoreDataProperties.m"; sourceTree = "<group>"; };
 		46EEA5961C01ACEC00CAD336 /* DBCurrency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCurrency.h; sourceTree = "<group>"; };
 		46EEA5971C01ACEC00CAD336 /* DBCurrency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBCurrency.m; sourceTree = "<group>"; };
-		46EEA5981C01ACEC00CAD336 /* DBCategory+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBCategory+CoreDataProperties.h"; sourceTree = "<group>"; };
-		46EEA5991C01ACEC00CAD336 /* DBCategory+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBCategory+CoreDataProperties.m"; sourceTree = "<group>"; };
-		46EEA59A1C01ACEC00CAD336 /* DBCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCategory.h; sourceTree = "<group>"; };
-		46EEA59B1C01ACEC00CAD336 /* DBCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBCategory.m; sourceTree = "<group>"; };
 		46EEA59C1C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBTransactions+CoreDataProperties.h"; sourceTree = "<group>"; };
 		46EEA59D1C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBTransactions+CoreDataProperties.m"; sourceTree = "<group>"; };
 		46EEA59E1C01ACEC00CAD336 /* DBTransactions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBTransactions.h; sourceTree = "<group>"; };
@@ -131,6 +127,10 @@
 		46EEA5A11C01ACEC00CAD336 /* DBPlannedTransactions+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBPlannedTransactions+CoreDataProperties.m"; sourceTree = "<group>"; };
 		46EEA5A21C01ACEC00CAD336 /* DBPlannedTransactions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPlannedTransactions.h; sourceTree = "<group>"; };
 		46EEA5A31C01ACEC00CAD336 /* DBPlannedTransactions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPlannedTransactions.m; sourceTree = "<group>"; };
+		46EEA5AC1C01B10000CAD336 /* DBCategory+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBCategory+CoreDataProperties.h"; sourceTree = "<group>"; };
+		46EEA5AD1C01B10000CAD336 /* DBCategory+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBCategory+CoreDataProperties.m"; sourceTree = "<group>"; };
+		46EEA5AE1C01B10000CAD336 /* DBCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCategory.h; sourceTree = "<group>"; };
+		46EEA5AF1C01B10000CAD336 /* DBCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBCategory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,10 +287,10 @@
 				46EEA5951C01ACEC00CAD336 /* DBCurrency+CoreDataProperties.m */,
 				46EEA5961C01ACEC00CAD336 /* DBCurrency.h */,
 				46EEA5971C01ACEC00CAD336 /* DBCurrency.m */,
-				46EEA5981C01ACEC00CAD336 /* DBCategory+CoreDataProperties.h */,
-				46EEA5991C01ACEC00CAD336 /* DBCategory+CoreDataProperties.m */,
-				46EEA59A1C01ACEC00CAD336 /* DBCategory.h */,
-				46EEA59B1C01ACEC00CAD336 /* DBCategory.m */,
+				46EEA5AC1C01B10000CAD336 /* DBCategory+CoreDataProperties.h */,
+				46EEA5AD1C01B10000CAD336 /* DBCategory+CoreDataProperties.m */,
+				46EEA5AE1C01B10000CAD336 /* DBCategory.h */,
+				46EEA5AF1C01B10000CAD336 /* DBCategory.m */,
 				46EEA59C1C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.h */,
 				46EEA59D1C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.m */,
 				46EEA59E1C01ACEC00CAD336 /* DBTransactions.h */,
@@ -453,18 +453,18 @@
 				2C10C10E1BE233350030289C /* private_budget.xcdatamodeld in Sources */,
 				46EEA5861C01A71D00CAD336 /* DatabaseManager.m in Sources */,
 				2C10C1081BE233350030289C /* AddTransactionViewController.m in Sources */,
-				46EEA5A71C01ACEC00CAD336 /* DBCategory.m in Sources */,
 				2C10C1051BE233350030289C /* AppDelegate.m in Sources */,
-				46EEA5A61C01ACEC00CAD336 /* DBCategory+CoreDataProperties.m in Sources */,
 				46EEA5AB1C01ACEC00CAD336 /* DBPlannedTransactions.m in Sources */,
 				2C8BDF181BEF00B900DEFDD1 /* SettingsViewController.m in Sources */,
 				2C8BDF151BEEFEDE00DEFDD1 /* ReportViewController.m in Sources */,
+				46EEA5B01C01B10000CAD336 /* DBCategory+CoreDataProperties.m in Sources */,
 				2C10C13E1BE23C970030289C /* HomeViewController.m in Sources */,
 				46EEA5A81C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.m in Sources */,
 				46EEA5A51C01ACEC00CAD336 /* DBCurrency.m in Sources */,
 				46EEA5A91C01ACEC00CAD336 /* DBTransactions.m in Sources */,
 				2C10C1411BE23CF30030289C /* PlannedTransactionViewController.m in Sources */,
 				2C10C1021BE233350030289C /* main.m in Sources */,
+				46EEA5B11C01B10000CAD336 /* DBCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
