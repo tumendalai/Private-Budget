@@ -16,10 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DBTransactions (CoreDataProperties)
 
 @property (nullable, nonatomic, retain) NSNumber *amount;
-@property (nullable, nonatomic, retain) NSNumber *category;
-@property (nullable, nonatomic, retain) NSNumber *currency;
+@property (nullable, nonatomic, retain) NSNumber *category_id;
+@property (nullable, nonatomic, retain) NSNumber *currency_id;
 @property (nullable, nonatomic, retain) NSDate *date;
-@property (nullable, nonatomic, retain) NSNumber *id;
+@property (nullable, nonatomic, retain) NSNumber *is_income;
+@property (nullable, nonatomic, retain) NSNumber *itemid;
 @property (nullable, nonatomic, retain) NSString *reciever;
 @property (nullable, nonatomic, retain) NSString *transaction_description;
 

@@ -71,7 +71,7 @@
             [object2 setValue:[object1 valueForKey:key] forKey:key];
         }
     }
-    [object2 setValue:[NSDate date] forKey:@"db_inserted_date"];
+//    [object2 setValue:[NSDate date] forKey:@"db_inserted_date"];
     
     return object2;
 }
@@ -201,10 +201,10 @@
         return persistentStoreCoordinator;
     }
 	
-	NSString *storePath = [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"iRestaurantKaizen.sqlite"];
+	NSString *storePath = [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"PrivateBudget.sqlite"];
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	if (![fileManager fileExistsAtPath:storePath]) {
-		NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:@"iRestaurantKaizen" ofType:@"sqlite"];
+		NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:@"PrivateBudget" ofType:@"sqlite"];
 		if (defaultStorePath) {
 			[fileManager copyItemAtPath:defaultStorePath toPath:storePath error:NULL];
 		}

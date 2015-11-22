@@ -9,7 +9,7 @@
     <entity name="DBCurrency" representedClassName="DBCurrency" syncable="YES">
         <attribute name="currency_image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="currency_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="itemid" optional="YES" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="itemid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="DBPlannedTransactions" representedClassName="DBPlannedTransactions" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -18,24 +18,25 @@
         <attribute name="currency_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="end_date" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="itemid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="planned_transaction_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="reciever" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="start_date" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <entity name="DBTransactions" representedClassName="DBTransactions" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="category" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="currency" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="category_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="currency_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="is_income" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="itemid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="reciever" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="transaction_description" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="DBCategory" positionX="189" positionY="63" width="128" height="103"/>
-        <element name="DBCurrency" positionX="-153" positionY="27" width="128" height="88"/>
+        <element name="DBCurrency" positionX="-153" positionY="27" width="128" height="90"/>
         <element name="DBPlannedTransactions" positionX="45" positionY="144" width="128" height="193"/>
-        <element name="DBTransactions" positionX="27" positionY="-69" width="128" height="148"/>
+        <element name="DBTransactions" positionX="27" positionY="-69" width="128" height="165"/>
     </elements>
 </model>

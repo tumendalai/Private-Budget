@@ -14,10 +14,11 @@
 @implementation DBTransactions (CoreDataProperties)
 
 @dynamic amount;
-@dynamic category;
-@dynamic currency;
+@dynamic category_id;
+@dynamic currency_id;
 @dynamic date;
-@dynamic id;
+@dynamic is_income;
+@dynamic itemid;
 @dynamic reciever;
 @dynamic transaction_description;
 

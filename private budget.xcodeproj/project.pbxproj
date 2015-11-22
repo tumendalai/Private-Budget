@@ -40,14 +40,21 @@
 		46EEA5801C019EF100CAD336 /* grafic_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EEA57E1C019EF100CAD336 /* grafic_button.png */; };
 		46EEA5811C019EF100CAD336 /* grafic_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EEA57F1C019EF100CAD336 /* grafic_button@2x.png */; };
 		46EEA5861C01A71D00CAD336 /* DatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5851C01A71D00CAD336 /* DatabaseManager.m */; };
-		46EEA5A41C01ACEC00CAD336 /* DBCurrency+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5951C01ACEC00CAD336 /* DBCurrency+CoreDataProperties.m */; };
-		46EEA5A51C01ACEC00CAD336 /* DBCurrency.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5971C01ACEC00CAD336 /* DBCurrency.m */; };
-		46EEA5A81C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA59D1C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.m */; };
-		46EEA5A91C01ACEC00CAD336 /* DBTransactions.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA59F1C01ACEC00CAD336 /* DBTransactions.m */; };
-		46EEA5AA1C01ACEC00CAD336 /* DBPlannedTransactions+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5A11C01ACEC00CAD336 /* DBPlannedTransactions+CoreDataProperties.m */; };
-		46EEA5AB1C01ACEC00CAD336 /* DBPlannedTransactions.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5A31C01ACEC00CAD336 /* DBPlannedTransactions.m */; };
-		46EEA5B01C01B10000CAD336 /* DBCategory+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5AD1C01B10000CAD336 /* DBCategory+CoreDataProperties.m */; };
-		46EEA5B11C01B10000CAD336 /* DBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5AF1C01B10000CAD336 /* DBCategory.m */; };
+		46EEA5DB1C01B8BA00CAD336 /* Currency.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5DA1C01B8BA00CAD336 /* Currency.m */; };
+		46EEA5E01C01C92700CAD336 /* mnt_currency.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EEA5DD1C01C92700CAD336 /* mnt_currency.png */; };
+		46EEA5E11C01C92700CAD336 /* currency_euro.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EEA5DE1C01C92700CAD336 /* currency_euro.png */; };
+		46EEA5E21C01C92700CAD336 /* dollar_currency.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EEA5DF1C01C92700CAD336 /* dollar_currency.png */; };
+		46EEA5EE1C01EFC500CAD336 /* TransactionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA5ED1C01EFC500CAD336 /* TransactionTableViewCell.m */; };
+		46EEA6031C020A9C00CAD336 /* Transactions.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA6021C020A9C00CAD336 /* Transactions.m */; };
+		46EEA6321C020D1400CAD336 /* DBCategory+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA6231C020D1400CAD336 /* DBCategory+CoreDataProperties.m */; };
+		46EEA6331C020D1400CAD336 /* DBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA6251C020D1400CAD336 /* DBCategory.m */; };
+		46EEA6341C020D1400CAD336 /* DBTransactions+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA6271C020D1400CAD336 /* DBTransactions+CoreDataProperties.m */; };
+		46EEA6351C020D1400CAD336 /* DBTransactions.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA6291C020D1400CAD336 /* DBTransactions.m */; };
+		46EEA6361C020D1400CAD336 /* DBCurrency+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA62B1C020D1400CAD336 /* DBCurrency+CoreDataProperties.m */; };
+		46EEA6371C020D1400CAD336 /* DBCurrency.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA62D1C020D1400CAD336 /* DBCurrency.m */; };
+		46EEA6381C020D1400CAD336 /* DBPlannedTransactions+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA62F1C020D1400CAD336 /* DBPlannedTransactions+CoreDataProperties.m */; };
+		46EEA6391C020D1400CAD336 /* DBPlannedTransactions.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA6311C020D1400CAD336 /* DBPlannedTransactions.m */; };
+		46EEA63C1C02107A00CAD336 /* CategoryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EEA63B1C02107A00CAD336 /* CategoryObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,8 +79,8 @@
 		2C10C1011BE233350030289C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2C10C1031BE233350030289C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2C10C1041BE233350030289C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		2C10C1061BE233350030289C /* AddTransactionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddTransactionViewController.h; sourceTree = "<group>"; };
-		2C10C1071BE233350030289C /* AddTransactionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddTransactionViewController.m; sourceTree = "<group>"; };
+		2C10C1061BE233350030289C /* AddTransactionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AddTransactionViewController.h; path = ../AddTransactionViewController.h; sourceTree = "<group>"; };
+		2C10C1071BE233350030289C /* AddTransactionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AddTransactionViewController.m; path = ../AddTransactionViewController.m; sourceTree = "<group>"; };
 		2C10C10D1BE233350030289C /* private_budget.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = private_budget.xcdatamodel; sourceTree = "<group>"; };
 		2C10C10F1BE233350030289C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C10C1141BE233350030289C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -86,15 +93,15 @@
 		2C10C1361BE239C00030289C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2C10C1381BE239CB0030289C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		2C10C13A1BE23B180030289C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		2C10C13C1BE23C970030289C /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		2C10C13D1BE23C970030289C /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		2C10C13F1BE23CF30030289C /* PlannedTransactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlannedTransactionViewController.h; sourceTree = "<group>"; };
-		2C10C1401BE23CF30030289C /* PlannedTransactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlannedTransactionViewController.m; sourceTree = "<group>"; };
+		2C10C13C1BE23C970030289C /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeViewController.h; path = "private budget/HomeViewController.h"; sourceTree = SOURCE_ROOT; };
+		2C10C13D1BE23C970030289C /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = "private budget/HomeViewController.m"; sourceTree = SOURCE_ROOT; };
+		2C10C13F1BE23CF30030289C /* PlannedTransactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlannedTransactionViewController.h; path = ../PlannedTransactionViewController.h; sourceTree = "<group>"; };
+		2C10C1401BE23CF30030289C /* PlannedTransactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlannedTransactionViewController.m; path = ../PlannedTransactionViewController.m; sourceTree = "<group>"; };
 		2C10C1451BE245900030289C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		2C8BDF131BEEFEDE00DEFDD1 /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
-		2C8BDF141BEEFEDE00DEFDD1 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
-		2C8BDF161BEF00B900DEFDD1 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		2C8BDF171BEF00B900DEFDD1 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		2C8BDF131BEEFEDE00DEFDD1 /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReportViewController.h; path = "private budget/ReportViewController.h"; sourceTree = SOURCE_ROOT; };
+		2C8BDF141BEEFEDE00DEFDD1 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReportViewController.m; path = "private budget/ReportViewController.m"; sourceTree = SOURCE_ROOT; };
+		2C8BDF161BEF00B900DEFDD1 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = "private budget/SettingsViewController.h"; sourceTree = SOURCE_ROOT; };
+		2C8BDF171BEF00B900DEFDD1 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = "private budget/SettingsViewController.m"; sourceTree = SOURCE_ROOT; };
 		46EEA55D1C01997700CAD336 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		46EEA5621C019CED00CAD336 /* adress_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = adress_button.png; sourceTree = "<group>"; };
 		46EEA5631C019CED00CAD336 /* adress_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "adress_button@2x.png"; sourceTree = "<group>"; };
@@ -115,22 +122,33 @@
 		46EEA5821C01A68600CAD336 /* PrivateBudget-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PrivateBudget-Prefix.pch"; sourceTree = "<group>"; };
 		46EEA5841C01A71D00CAD336 /* DatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseManager.h; sourceTree = "<group>"; };
 		46EEA5851C01A71D00CAD336 /* DatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseManager.m; sourceTree = "<group>"; };
-		46EEA5941C01ACEC00CAD336 /* DBCurrency+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBCurrency+CoreDataProperties.h"; sourceTree = "<group>"; };
-		46EEA5951C01ACEC00CAD336 /* DBCurrency+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBCurrency+CoreDataProperties.m"; sourceTree = "<group>"; };
-		46EEA5961C01ACEC00CAD336 /* DBCurrency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCurrency.h; sourceTree = "<group>"; };
-		46EEA5971C01ACEC00CAD336 /* DBCurrency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBCurrency.m; sourceTree = "<group>"; };
-		46EEA59C1C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBTransactions+CoreDataProperties.h"; sourceTree = "<group>"; };
-		46EEA59D1C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBTransactions+CoreDataProperties.m"; sourceTree = "<group>"; };
-		46EEA59E1C01ACEC00CAD336 /* DBTransactions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBTransactions.h; sourceTree = "<group>"; };
-		46EEA59F1C01ACEC00CAD336 /* DBTransactions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBTransactions.m; sourceTree = "<group>"; };
-		46EEA5A01C01ACEC00CAD336 /* DBPlannedTransactions+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBPlannedTransactions+CoreDataProperties.h"; sourceTree = "<group>"; };
-		46EEA5A11C01ACEC00CAD336 /* DBPlannedTransactions+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBPlannedTransactions+CoreDataProperties.m"; sourceTree = "<group>"; };
-		46EEA5A21C01ACEC00CAD336 /* DBPlannedTransactions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPlannedTransactions.h; sourceTree = "<group>"; };
-		46EEA5A31C01ACEC00CAD336 /* DBPlannedTransactions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPlannedTransactions.m; sourceTree = "<group>"; };
-		46EEA5AC1C01B10000CAD336 /* DBCategory+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBCategory+CoreDataProperties.h"; sourceTree = "<group>"; };
-		46EEA5AD1C01B10000CAD336 /* DBCategory+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBCategory+CoreDataProperties.m"; sourceTree = "<group>"; };
-		46EEA5AE1C01B10000CAD336 /* DBCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCategory.h; sourceTree = "<group>"; };
-		46EEA5AF1C01B10000CAD336 /* DBCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBCategory.m; sourceTree = "<group>"; };
+		46EEA5D91C01B8BA00CAD336 /* Currency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Currency.h; sourceTree = "<group>"; };
+		46EEA5DA1C01B8BA00CAD336 /* Currency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Currency.m; sourceTree = "<group>"; };
+		46EEA5DD1C01C92700CAD336 /* mnt_currency.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mnt_currency.png; sourceTree = "<group>"; };
+		46EEA5DE1C01C92700CAD336 /* currency_euro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = currency_euro.png; sourceTree = "<group>"; };
+		46EEA5DF1C01C92700CAD336 /* dollar_currency.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dollar_currency.png; sourceTree = "<group>"; };
+		46EEA5EC1C01EFC500CAD336 /* TransactionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransactionTableViewCell.h; sourceTree = "<group>"; };
+		46EEA5ED1C01EFC500CAD336 /* TransactionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionTableViewCell.m; sourceTree = "<group>"; };
+		46EEA6011C020A9C00CAD336 /* Transactions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transactions.h; sourceTree = "<group>"; };
+		46EEA6021C020A9C00CAD336 /* Transactions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transactions.m; sourceTree = "<group>"; };
+		46EEA6221C020D1400CAD336 /* DBCategory+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBCategory+CoreDataProperties.h"; sourceTree = "<group>"; };
+		46EEA6231C020D1400CAD336 /* DBCategory+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBCategory+CoreDataProperties.m"; sourceTree = "<group>"; };
+		46EEA6241C020D1400CAD336 /* DBCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCategory.h; sourceTree = "<group>"; };
+		46EEA6251C020D1400CAD336 /* DBCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBCategory.m; sourceTree = "<group>"; };
+		46EEA6261C020D1400CAD336 /* DBTransactions+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBTransactions+CoreDataProperties.h"; sourceTree = "<group>"; };
+		46EEA6271C020D1400CAD336 /* DBTransactions+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBTransactions+CoreDataProperties.m"; sourceTree = "<group>"; };
+		46EEA6281C020D1400CAD336 /* DBTransactions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBTransactions.h; sourceTree = "<group>"; };
+		46EEA6291C020D1400CAD336 /* DBTransactions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBTransactions.m; sourceTree = "<group>"; };
+		46EEA62A1C020D1400CAD336 /* DBCurrency+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBCurrency+CoreDataProperties.h"; sourceTree = "<group>"; };
+		46EEA62B1C020D1400CAD336 /* DBCurrency+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBCurrency+CoreDataProperties.m"; sourceTree = "<group>"; };
+		46EEA62C1C020D1400CAD336 /* DBCurrency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCurrency.h; sourceTree = "<group>"; };
+		46EEA62D1C020D1400CAD336 /* DBCurrency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBCurrency.m; sourceTree = "<group>"; };
+		46EEA62E1C020D1400CAD336 /* DBPlannedTransactions+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBPlannedTransactions+CoreDataProperties.h"; sourceTree = "<group>"; };
+		46EEA62F1C020D1400CAD336 /* DBPlannedTransactions+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBPlannedTransactions+CoreDataProperties.m"; sourceTree = "<group>"; };
+		46EEA6301C020D1400CAD336 /* DBPlannedTransactions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPlannedTransactions.h; sourceTree = "<group>"; };
+		46EEA6311C020D1400CAD336 /* DBPlannedTransactions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPlannedTransactions.m; sourceTree = "<group>"; };
+		46EEA63A1C02107A00CAD336 /* CategoryObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryObject.h; sourceTree = "<group>"; };
+		46EEA63B1C02107A00CAD336 /* CategoryObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,11 +183,8 @@
 		2C10C0F41BE233340030289C = {
 			isa = PBXGroup;
 			children = (
-				46EEA55D1C01997700CAD336 /* CoreData.framework */,
-				2C10C13A1BE23B180030289C /* UIKit.framework */,
-				2C10C1381BE239CB0030289C /* CoreFoundation.framework */,
-				2C10C1361BE239C00030289C /* Foundation.framework */,
 				2C10C0FF1BE233350030289C /* private budget */,
+				46EEA5D81C01B77600CAD336 /* Frameworks */,
 				2C10C11C1BE233350030289C /* private budgetTests */,
 				2C10C1271BE233350030289C /* private budgetUITests */,
 				2C10C0FE1BE233350030289C /* Products */,
@@ -191,16 +206,11 @@
 			children = (
 				2C10C1031BE233350030289C /* AppDelegate.h */,
 				2C10C1041BE233350030289C /* AppDelegate.m */,
-				2C10C13C1BE23C970030289C /* HomeViewController.h */,
-				2C10C13D1BE23C970030289C /* HomeViewController.m */,
-				2C10C13F1BE23CF30030289C /* PlannedTransactionViewController.h */,
-				2C10C1401BE23CF30030289C /* PlannedTransactionViewController.m */,
-				2C10C1061BE233350030289C /* AddTransactionViewController.h */,
-				2C10C1071BE233350030289C /* AddTransactionViewController.m */,
-				2C8BDF161BEF00B900DEFDD1 /* SettingsViewController.h */,
-				2C8BDF171BEF00B900DEFDD1 /* SettingsViewController.m */,
-				2C8BDF131BEEFEDE00DEFDD1 /* ReportViewController.h */,
-				2C8BDF141BEEFEDE00DEFDD1 /* ReportViewController.m */,
+				46EEA5E71C01E66D00CAD336 /* HomeViewController */,
+				46EEA5E81C01E68600CAD336 /* PlannedViewController */,
+				46EEA5E91C01E69C00CAD336 /* AddViewController */,
+				46EEA5EA1C01E6B100CAD336 /* SettingsViewController */,
+				46EEA5EB1C01E6C400CAD336 /* ReportViewController */,
 				46EEA5831C01A70E00CAD336 /* Database */,
 				2C10C1441BE245900030289C /* Resources */,
 				2C10C10F1BE233350030289C /* Assets.xcassets */,
@@ -241,6 +251,7 @@
 		2C10C1441BE245900030289C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				46EEA5DC1C01C91F00CAD336 /* Currency */,
 				46EEA55F1C019AF900CAD336 /* menu */,
 				2C10C1451BE245900030289C /* Default-568h@2x.png */,
 				46EEA56A1C019E5300CAD336 /* button_back.png */,
@@ -275,6 +286,7 @@
 			children = (
 				46EEA5841C01A71D00CAD336 /* DatabaseManager.h */,
 				46EEA5851C01A71D00CAD336 /* DatabaseManager.m */,
+				46EEA5B31C01B58500CAD336 /* TempObjects */,
 				46EEA5871C01A9B300CAD336 /* ConnectionData */,
 			);
 			path = Database;
@@ -283,24 +295,106 @@
 		46EEA5871C01A9B300CAD336 /* ConnectionData */ = {
 			isa = PBXGroup;
 			children = (
-				46EEA5941C01ACEC00CAD336 /* DBCurrency+CoreDataProperties.h */,
-				46EEA5951C01ACEC00CAD336 /* DBCurrency+CoreDataProperties.m */,
-				46EEA5961C01ACEC00CAD336 /* DBCurrency.h */,
-				46EEA5971C01ACEC00CAD336 /* DBCurrency.m */,
-				46EEA5AC1C01B10000CAD336 /* DBCategory+CoreDataProperties.h */,
-				46EEA5AD1C01B10000CAD336 /* DBCategory+CoreDataProperties.m */,
-				46EEA5AE1C01B10000CAD336 /* DBCategory.h */,
-				46EEA5AF1C01B10000CAD336 /* DBCategory.m */,
-				46EEA59C1C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.h */,
-				46EEA59D1C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.m */,
-				46EEA59E1C01ACEC00CAD336 /* DBTransactions.h */,
-				46EEA59F1C01ACEC00CAD336 /* DBTransactions.m */,
-				46EEA5A01C01ACEC00CAD336 /* DBPlannedTransactions+CoreDataProperties.h */,
-				46EEA5A11C01ACEC00CAD336 /* DBPlannedTransactions+CoreDataProperties.m */,
-				46EEA5A21C01ACEC00CAD336 /* DBPlannedTransactions.h */,
-				46EEA5A31C01ACEC00CAD336 /* DBPlannedTransactions.m */,
+				46EEA6221C020D1400CAD336 /* DBCategory+CoreDataProperties.h */,
+				46EEA6231C020D1400CAD336 /* DBCategory+CoreDataProperties.m */,
+				46EEA6241C020D1400CAD336 /* DBCategory.h */,
+				46EEA6251C020D1400CAD336 /* DBCategory.m */,
+				46EEA6261C020D1400CAD336 /* DBTransactions+CoreDataProperties.h */,
+				46EEA6271C020D1400CAD336 /* DBTransactions+CoreDataProperties.m */,
+				46EEA6281C020D1400CAD336 /* DBTransactions.h */,
+				46EEA6291C020D1400CAD336 /* DBTransactions.m */,
+				46EEA62A1C020D1400CAD336 /* DBCurrency+CoreDataProperties.h */,
+				46EEA62B1C020D1400CAD336 /* DBCurrency+CoreDataProperties.m */,
+				46EEA62C1C020D1400CAD336 /* DBCurrency.h */,
+				46EEA62D1C020D1400CAD336 /* DBCurrency.m */,
+				46EEA62E1C020D1400CAD336 /* DBPlannedTransactions+CoreDataProperties.h */,
+				46EEA62F1C020D1400CAD336 /* DBPlannedTransactions+CoreDataProperties.m */,
+				46EEA6301C020D1400CAD336 /* DBPlannedTransactions.h */,
+				46EEA6311C020D1400CAD336 /* DBPlannedTransactions.m */,
 			);
 			path = ConnectionData;
+			sourceTree = "<group>";
+		};
+		46EEA5B31C01B58500CAD336 /* TempObjects */ = {
+			isa = PBXGroup;
+			children = (
+				46EEA5D91C01B8BA00CAD336 /* Currency.h */,
+				46EEA5DA1C01B8BA00CAD336 /* Currency.m */,
+				46EEA6011C020A9C00CAD336 /* Transactions.h */,
+				46EEA6021C020A9C00CAD336 /* Transactions.m */,
+				46EEA63A1C02107A00CAD336 /* CategoryObject.h */,
+				46EEA63B1C02107A00CAD336 /* CategoryObject.m */,
+			);
+			path = TempObjects;
+			sourceTree = "<group>";
+		};
+		46EEA5D81C01B77600CAD336 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				46EEA55D1C01997700CAD336 /* CoreData.framework */,
+				2C10C13A1BE23B180030289C /* UIKit.framework */,
+				2C10C1381BE239CB0030289C /* CoreFoundation.framework */,
+				2C10C1361BE239C00030289C /* Foundation.framework */,
+			);
+			name = Frameworks;
+			path = "private budget";
+			sourceTree = "<group>";
+		};
+		46EEA5DC1C01C91F00CAD336 /* Currency */ = {
+			isa = PBXGroup;
+			children = (
+				46EEA5DD1C01C92700CAD336 /* mnt_currency.png */,
+				46EEA5DE1C01C92700CAD336 /* currency_euro.png */,
+				46EEA5DF1C01C92700CAD336 /* dollar_currency.png */,
+			);
+			path = Currency;
+			sourceTree = "<group>";
+		};
+		46EEA5E71C01E66D00CAD336 /* HomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2C10C13C1BE23C970030289C /* HomeViewController.h */,
+				2C10C13D1BE23C970030289C /* HomeViewController.m */,
+				46EEA5EC1C01EFC500CAD336 /* TransactionTableViewCell.h */,
+				46EEA5ED1C01EFC500CAD336 /* TransactionTableViewCell.m */,
+			);
+			path = HomeViewController;
+			sourceTree = "<group>";
+		};
+		46EEA5E81C01E68600CAD336 /* PlannedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2C10C13F1BE23CF30030289C /* PlannedTransactionViewController.h */,
+				2C10C1401BE23CF30030289C /* PlannedTransactionViewController.m */,
+			);
+			path = PlannedViewController;
+			sourceTree = "<group>";
+		};
+		46EEA5E91C01E69C00CAD336 /* AddViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2C10C1061BE233350030289C /* AddTransactionViewController.h */,
+				2C10C1071BE233350030289C /* AddTransactionViewController.m */,
+			);
+			path = AddViewController;
+			sourceTree = "<group>";
+		};
+		46EEA5EA1C01E6B100CAD336 /* SettingsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2C8BDF161BEF00B900DEFDD1 /* SettingsViewController.h */,
+				2C8BDF171BEF00B900DEFDD1 /* SettingsViewController.m */,
+			);
+			path = SettingsViewController;
+			sourceTree = "<group>";
+		};
+		46EEA5EB1C01E6C400CAD336 /* ReportViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2C8BDF131BEEFEDE00DEFDD1 /* ReportViewController.h */,
+				2C8BDF141BEEFEDE00DEFDD1 /* ReportViewController.m */,
+			);
+			path = ReportViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -411,10 +505,13 @@
 				46EEA5691C019D1E00CAD336 /* baraa_add@2x.png in Resources */,
 				2C10C1461BE245900030289C /* Default-568h@2x.png in Resources */,
 				46EEA56D1C019E5300CAD336 /* button_back@2x.png in Resources */,
+				46EEA5E11C01C92700CAD336 /* currency_euro.png in Resources */,
 				46EEA5741C019E8500CAD336 /* button_settings.png in Resources */,
 				46EEA5681C019D1E00CAD336 /* baraa_add.png in Resources */,
+				46EEA5E21C01C92700CAD336 /* dollar_currency.png in Resources */,
 				46EEA5701C019E6D00CAD336 /* button_delete.png in Resources */,
 				46EEA5791C019EA800CAD336 /* clock_selection@2x.png in Resources */,
+				46EEA5E01C01C92700CAD336 /* mnt_currency.png in Resources */,
 				46EEA5751C019E8500CAD336 /* button_settings@2x.png in Resources */,
 				46EEA5641C019CED00CAD336 /* adress_button.png in Resources */,
 				46EEA57C1C019EDB00CAD336 /* edit.png in Resources */,
@@ -448,23 +545,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46EEA5A41C01ACEC00CAD336 /* DBCurrency+CoreDataProperties.m in Sources */,
-				46EEA5AA1C01ACEC00CAD336 /* DBPlannedTransactions+CoreDataProperties.m in Sources */,
+				46EEA5DB1C01B8BA00CAD336 /* Currency.m in Sources */,
 				2C10C10E1BE233350030289C /* private_budget.xcdatamodeld in Sources */,
+				46EEA6341C020D1400CAD336 /* DBTransactions+CoreDataProperties.m in Sources */,
 				46EEA5861C01A71D00CAD336 /* DatabaseManager.m in Sources */,
+				46EEA6331C020D1400CAD336 /* DBCategory.m in Sources */,
+				46EEA6361C020D1400CAD336 /* DBCurrency+CoreDataProperties.m in Sources */,
+				46EEA6031C020A9C00CAD336 /* Transactions.m in Sources */,
 				2C10C1081BE233350030289C /* AddTransactionViewController.m in Sources */,
 				2C10C1051BE233350030289C /* AppDelegate.m in Sources */,
-				46EEA5AB1C01ACEC00CAD336 /* DBPlannedTransactions.m in Sources */,
+				46EEA5EE1C01EFC500CAD336 /* TransactionTableViewCell.m in Sources */,
 				2C8BDF181BEF00B900DEFDD1 /* SettingsViewController.m in Sources */,
+				46EEA6351C020D1400CAD336 /* DBTransactions.m in Sources */,
 				2C8BDF151BEEFEDE00DEFDD1 /* ReportViewController.m in Sources */,
-				46EEA5B01C01B10000CAD336 /* DBCategory+CoreDataProperties.m in Sources */,
 				2C10C13E1BE23C970030289C /* HomeViewController.m in Sources */,
-				46EEA5A81C01ACEC00CAD336 /* DBTransactions+CoreDataProperties.m in Sources */,
-				46EEA5A51C01ACEC00CAD336 /* DBCurrency.m in Sources */,
-				46EEA5A91C01ACEC00CAD336 /* DBTransactions.m in Sources */,
+				46EEA63C1C02107A00CAD336 /* CategoryObject.m in Sources */,
+				46EEA6381C020D1400CAD336 /* DBPlannedTransactions+CoreDataProperties.m in Sources */,
+				46EEA6391C020D1400CAD336 /* DBPlannedTransactions.m in Sources */,
+				46EEA6321C020D1400CAD336 /* DBCategory+CoreDataProperties.m in Sources */,
 				2C10C1411BE23CF30030289C /* PlannedTransactionViewController.m in Sources */,
+				46EEA6371C020D1400CAD336 /* DBCurrency.m in Sources */,
 				2C10C1021BE233350030289C /* main.m in Sources */,
-				46EEA5B11C01B10000CAD336 /* DBCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,7 +19,7 @@
 @dynamic currency_id;
 @dynamic date;
 @dynamic end_date;
-@dynamic id;
+@dynamic itemid;
 @dynamic planned_transaction_description;
 @dynamic reciever;
 @dynamic start_date;

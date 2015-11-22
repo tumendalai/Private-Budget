@@ -15,7 +15,7 @@
 
 @dynamic category_image;
 @dynamic category_name;
-@dynamic itemid;
 @dynamic category_type;
+@dynamic itemid;
 
 @end

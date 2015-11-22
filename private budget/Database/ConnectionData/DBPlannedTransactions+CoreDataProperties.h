@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *currency_id;
 @property (nullable, nonatomic, retain) NSDate *date;
 @property (nullable, nonatomic, retain) NSDate *end_date;
-@property (nullable, nonatomic, retain) NSNumber *id;
+@property (nullable, nonatomic, retain) NSNumber *itemid;
 @property (nullable, nonatomic, retain) NSString *planned_transaction_description;
 @property (nullable, nonatomic, retain) NSString *reciever;
 @property (nullable, nonatomic, retain) NSDate *start_date;
