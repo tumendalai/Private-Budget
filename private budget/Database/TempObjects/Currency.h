@@ -10,8 +10,8 @@
 
 @interface Currency : NSObject
 
-@property ( nonatomic, strong) NSString *currency_image;
-@property ( nonatomic, strong) NSString *currency_name;
+@property ( nonatomic, strong) NSString *image;
 @property ( nonatomic, strong) NSNumber *itemid;
+@property ( nonatomic, strong) NSString *name;
 
 @end

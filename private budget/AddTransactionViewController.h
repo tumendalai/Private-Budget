@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddTransactionViewController : UIViewController
+#import "CenterViewController.h"
+#import "MainAbstractViewController.h"
+
+@interface AddTransactionViewController : MainAbstractViewController
+
+
+@property (nonatomic, copy) void (^saveButtonClicked)();
 
 
 @end

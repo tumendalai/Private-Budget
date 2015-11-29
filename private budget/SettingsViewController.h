@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsViewController : UIViewController
+#import "CenterViewController.h"
+#import "MainAbstractViewController.h"
+
+@interface SettingsViewController : MainAbstractViewController
+
+@property (nonatomic, copy) void (^addButtonClicked)();
 
 @end

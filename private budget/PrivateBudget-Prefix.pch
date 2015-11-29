@@ -6,9 +6,8 @@
 //  Copyright © 2015 tuguldur purevnyam. All rights reserved.
 //
 
-#import "DatabaseManager.h"
 
-#define DATABASE_MANAGER                [DatabaseManager getDatabaseManager]
+#define APPDEL                              ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 
 #define IOS_VERSION_LOWER_THAN_8 (NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1)
 
@@ -25,4 +24,17 @@
 #define BLACK_COLOR                     [UIColor colorWithRed:77.0f/255.0f green:77.0f/255.0f blue:79.0f/255.0f alpha:1.0f]
 
 #define NORMALFONT                      @"MogulAvanti"
-#define FONT_NORMAL_SMALL               [UIFont fontWithName:NORMALFONT size:14.0f]
+#define FONT_NORMAL_SMALL               [UIFont fontWithName:NORMALFONT size:10.0f]
+
+#define RANDOM_COLOR                        [UIColor colorWithRed:(arc4random()%100) *.01 green:(arc4random()%100) *.01 blue:(arc4random()%100) *.01 alpha:1]
+
+#define CHART_COLOR_1                   [UIColor colorWithRed:22.0f/255.0f green:160.0f/255.0f blue:134.0f/255.0f alpha:1.0f]
+#define CHART_COLOR_2                   [UIColor colorWithRed:81.0f/255.0f green:189.0f/255.0f blue:127.0f/255.0f alpha:1.0f]
+#define CHART_COLOR_3                   [UIColor colorWithRed:41.0f/255.0f green:127.0f/255.0f blue:184.0f/255.0f alpha:1.0f]
+#define CHART_COLOR_4                   [UIColor colorWithRed:0.0f/255.0f green:155.0f/255.0f blue:222.0f/255.0f alpha:1.0f]
+#define CHART_COLOR_5                   [UIColor colorWithRed:164.0f/255.0f green:105.0f/255.0f blue:189.0f/255.0f alpha:1.0f]
+#define CHART_COLOR_6                   [UIColor colorWithRed:241.0f/255.0f green:196.0f/255.0f blue:15.0f/255.0f alpha:1.0f]
+#define CHART_COLOR_7                   [UIColor colorWithRed:230.0f/255.0f green:127.0f/255.0f blue:34.0f/255.0f alpha:1.0f]
+#define CHART_COLOR_8                   [UIColor colorWithRed:235.0f/255.0f green:111.0f/255.0f blue:99.0f/255.0f alpha:1.0f]
+#define CHART_COLOR_9                   [UIColor colorWithRed:243.0f/255.0f green:156.0f/255.0f blue:17.0f/255.0f alpha:1.0f]
+#define CHART_COLOR_10                  [UIColor colorWithRed:215.0f/255.0f green:73.0f/255.0f blue:89.0f/255.0f alpha:1.0f]

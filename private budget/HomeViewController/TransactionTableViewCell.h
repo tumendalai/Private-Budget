@@ -7,19 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Transactions.h"
+#import "Transaction.h"
 
 @interface TransactionTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel *dateLabel;
 
 @property (nonatomic, strong) UILabel *amountLabel;
-@property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UILabel *receiverLabel;
 @property (nonatomic, strong) UILabel *descriptionLabel;
 @property (nonatomic, strong) UIView  *containerView;
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
 
-@property (nonatomic, strong) Transactions *transaction;
+@property (nonatomic, strong) Transaction *transaction;
 
 @end

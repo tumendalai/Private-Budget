@@ -3,10 +3,13 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[HomeViewController getThisMonthTransactions]:HomeViewController.m">
+         contextName = "-[TransactionTableViewCell layoutSubviews]:TransactionTableViewCell.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.currencyArray">
+               value = "self.transaction">
+            </PersistentString>
+            <PersistentString
+               value = "self.dateLabel.text">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -15,6 +18,30 @@
          <PersistentStrings>
             <PersistentString
                value = "self.currencyArray">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[HomeViewController getThisMonthTransactions]:HomeViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.currencyArray">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CenterViewController refreshController:array:]:CenterViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.plannedTransactionViewController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[RootViewController menuButtonClicked:]:RootViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(int)button.tag">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

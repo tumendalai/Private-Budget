@@ -32,5 +32,13 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Mogul Avanti Bold Italic.ttf</string>
+		<string>Mogul Avanti Bold.ttf</string>
+		<string>Mogul Avanti Italic.ttf</string>
+		<string>Mogul Avanti.ttf</string>
+		<string>Digiface.ttf</string>
+	</array>
 </dict>
 </plist>

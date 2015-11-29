@@ -10,9 +10,10 @@
 
 @implementation CategoryObject
 
-@synthesize category_image;
-@synthesize category_name;
-@synthesize category_type;
+@synthesize image;
+@synthesize name;
+@synthesize type;
 @synthesize itemid;
+@synthesize transactionArray;
 
 @end

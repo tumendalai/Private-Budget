@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ReportViewController : UIViewController
+#import "CenterViewController.h"
+#import "MainAbstractViewController.h"
+#import "DashboardProductChartView.h"
 
+@interface ReportViewController : MainAbstractViewController
+
+@property (nonatomic, strong) DashboardProductChartView *productChartView;
 @end

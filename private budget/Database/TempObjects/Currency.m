@@ -10,8 +10,8 @@
 
 @implementation Currency
 
-@synthesize currency_image;
-@synthesize currency_name;
+@synthesize image;
+@synthesize name;
 @synthesize itemid;
 
 @end

@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Automatic">
-    <entity name="DBCategory" representedClassName="DBCategory" syncable="YES">
-        <attribute name="category_image" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="category_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="category_type" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
-        <attribute name="itemid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    <entity name="DBCategory" representedClassName="" syncable="YES">
+        <attribute name="image" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="type" attributeType="String" syncable="YES"/>
+        <relationship name="planned_transaction" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBPlannedTransaction" inverseName="ptran_category" inverseEntity="DBPlannedTransaction" syncable="YES"/>
+        <relationship name="transaction" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBTransaction" inverseName="tran_category" inverseEntity="DBTransaction" syncable="YES"/>
     </entity>
-    <entity name="DBCurrency" representedClassName="DBCurrency" syncable="YES">
-        <attribute name="currency_image" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="currency_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="itemid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    <entity name="DBCurrency" representedClassName="" syncable="YES">
+        <attribute name="image" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="planned_transaction" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBPlannedTransaction" inverseName="ptran_currency" inverseEntity="DBPlannedTransaction" syncable="YES"/>
+        <relationship name="transaction" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBTransaction" inverseName="tran_currency" inverseEntity="DBTransaction" syncable="YES"/>
     </entity>
-    <entity name="DBPlannedTransactions" representedClassName="DBPlannedTransactions" syncable="YES">
-        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="attribute" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="category" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="currency_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="end_date" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="itemid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="planned_transaction_description" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="reciever" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="start_date" optional="YES" attributeType="Date" syncable="YES"/>
+    <entity name="DBPlannedTransaction" representedClassName="" syncable="YES">
+        <attribute name="amount" attributeType="String" syncable="YES"/>
+        <attribute name="date" attributeType="String" syncable="YES"/>
+        <attribute name="end_date" attributeType="String" syncable="YES"/>
+        <attribute name="is_income" attributeType="String" syncable="YES"/>
+        <attribute name="reciever" attributeType="String" syncable="YES"/>
+        <attribute name="start_date" attributeType="String" syncable="YES"/>
+        <attribute name="transaction_description" attributeType="String" syncable="YES"/>
+        <relationship name="ptran_category" maxCount="1" deletionRule="Deny" destinationEntity="DBCategory" inverseName="planned_transaction" inverseEntity="DBCategory" syncable="YES"/>
+        <relationship name="ptran_currency" maxCount="1" deletionRule="Deny" destinationEntity="DBCurrency" inverseName="planned_transaction" inverseEntity="DBCurrency" syncable="YES"/>
     </entity>
-    <entity name="DBTransactions" representedClassName="DBTransactions" syncable="YES">
-        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="category_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="currency_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="is_income" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="itemid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="reciever" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="transaction_description" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="DBTransaction" representedClassName="" syncable="YES">
+        <attribute name="amount" attributeType="String" syncable="YES"/>
+        <attribute name="date" attributeType="String" syncable="YES"/>
+        <attribute name="is_income" attributeType="String" syncable="YES"/>
+        <attribute name="reciever" attributeType="String" syncable="YES"/>
+        <attribute name="transaction_description" attributeType="String" syncable="YES"/>
+        <relationship name="tran_category" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="DBCategory" inverseName="transaction" inverseEntity="DBCategory" syncable="YES"/>
+        <relationship name="tran_currency" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="DBCurrency" inverseName="transaction" inverseEntity="DBCurrency" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DBCategory" positionX="189" positionY="63" width="128" height="103"/>
-        <element name="DBCurrency" positionX="-153" positionY="27" width="128" height="90"/>
-        <element name="DBPlannedTransactions" positionX="45" positionY="144" width="128" height="193"/>
-        <element name="DBTransactions" positionX="27" positionY="-69" width="128" height="165"/>
+        <element name="DBCategory" positionX="-173" positionY="155" width="128" height="118"/>
+        <element name="DBCurrency" positionX="-299" positionY="-99" width="128" height="103"/>
+        <element name="DBPlannedTransaction" positionX="-360" positionY="81" width="128" height="178"/>
+        <element name="DBTransaction" positionX="-101" positionY="-99" width="128" height="148"/>
     </elements>
 </model>

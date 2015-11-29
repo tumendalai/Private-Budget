@@ -12,6 +12,7 @@
 #import "ReportViewController.h"
 #import "SettingsViewController.h"
 #import "AddTransactionViewController.h"
+#import "RootViewController.h"
 
 @interface AppDelegate ()
 
@@ -25,36 +26,77 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    RootViewController *controller = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
+    navController.navigationBarHidden = YES;
+    self.window.rootViewController = navController;
     
-    HomeViewController *homeViewController = [[HomeViewController alloc] init];
-    PlannedTransactionViewController* plannedTransactionViewController = [[PlannedTransactionViewController alloc] init];
-    AddTransactionViewController* addTransactionViewController = [[AddTransactionViewController alloc] init];
-    ReportViewController* reportViewController = [[ReportViewController alloc] init];
-    SettingsViewController* settingsViewController = [[SettingsViewController alloc] init];
     
-    homeViewController.title = @"Home";
-    plannedTransactionViewController.title = @"Plan";
-    addTransactionViewController.title = @"Add";
-    reportViewController.title =@"Report";
-    settingsViewController.title =@"Settings";
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"DBCategory" inManagedObjectContext:self.managedObjectContext];
+    NSManagedObject *newCategory = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext];
     
-    [homeViewController.tabBarItem setImage:[UIImage imageNamed:@"adress_button"]];
-    [plannedTransactionViewController.tabBarItem setImage:[UIImage imageNamed:@"clock_selection"]];
-    [addTransactionViewController.tabBarItem setImage:[UIImage imageNamed:@"baraa_add"]];
-    [reportViewController.tabBarItem setImage:[UIImage imageNamed:@"grafic_button"]];
-    [settingsViewController.tabBarItem setImage:[UIImage imageNamed:@"button_settings"]];
+    [newCategory setValue:@"cat_car" forKey:@"image"];
+    [newCategory setValue:@"Боловсрол" forKey:@"name"];
+    [newCategory setValue:@"0" forKey:@"type"];
     
-    NSArray* controllers = [NSArray arrayWithObjects:
-                            homeViewController,
-                            plannedTransactionViewController,
-                            addTransactionViewController,
-                            reportViewController,
-                            settingsViewController, nil];
+    NSError *error = nil;
     
-    tabBarController.viewControllers = controllers;
+    if (![newCategory.managedObjectContext save:&error]) {
+        NSLog(@"Unable to save managed object context.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+    }
     
-    self.window.rootViewController = tabBarController;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DBCategory" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    error = nil;
+    NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if (error) {
+        NSLog(@"Unable to execute fetch request.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+        
+    } else {
+        if (result.count > 0) {
+            NSManagedObject *person = (NSManagedObject *)[result objectAtIndex:0];
+            NSLog(@"1 - %@", person);
+            
+            NSLog(@"%@ %@", [person valueForKey:@"name"], [person valueForKey:@"image"]);
+            
+            NSLog(@"2 - %@", person);
+        }
+    }
+    
+//    HomeViewController *homeViewController = [[HomeViewController alloc] init];
+//    PlannedTransactionViewController* plannedTransactionViewController = [[PlannedTransactionViewController alloc] init];
+//    AddTransactionViewController* addTransactionViewController = [[AddTransactionViewController alloc] init];
+//    ReportViewController* reportViewController = [[ReportViewController alloc] init];
+//    SettingsViewController* settingsViewController = [[SettingsViewController alloc] init];
+//    
+//    homeViewController.title = @"Home";
+//    plannedTransactionViewController.title = @"Plan";
+//    addTransactionViewController.title = @"Add";
+//    reportViewController.title =@"Report";
+//    settingsViewController.title =@"Settings";
+//    
+//    [homeViewController.tabBarItem setImage:[UIImage imageNamed:@"adress_button"]];
+//    [plannedTransactionViewController.tabBarItem setImage:[UIImage imageNamed:@"clock_selection"]];
+//    [addTransactionViewController.tabBarItem setImage:[UIImage imageNamed:@"baraa_add"]];
+//    [reportViewController.tabBarItem setImage:[UIImage imageNamed:@"grafic_button"]];
+//    [settingsViewController.tabBarItem setImage:[UIImage imageNamed:@"button_settings"]];
+//    
+//    NSArray* controllers = [NSArray arrayWithObjects:
+//                            homeViewController,
+//                            plannedTransactionViewController,
+//                            addTransactionViewController,
+//                            reportViewController,
+//                            settingsViewController, nil];
+//    
+//    tabBarController.viewControllers = controllers;
+//    
+//    self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
     
     return YES;

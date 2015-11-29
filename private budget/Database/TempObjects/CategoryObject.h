@@ -10,9 +10,10 @@
 
 @interface CategoryObject : NSObject
 
-@property (nonatomic, strong) NSString *category_image;
-@property (nonatomic, strong) NSString *category_name;
-@property (nonatomic, strong) NSNumber *category_type;
-@property (nonatomic, strong) NSNumber *itemid;
+@property (nonatomic, strong) NSString *image;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *type;
+@property (nonatomic, strong) NSString *itemid;
+@property (nonatomic, strong) NSArray *transactionArray;
 
 @end
