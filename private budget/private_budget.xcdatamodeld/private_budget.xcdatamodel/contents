@@ -28,7 +28,7 @@
         <attribute name="amount" attributeType="String" syncable="YES"/>
         <attribute name="date" attributeType="String" syncable="YES"/>
         <attribute name="is_income" attributeType="String" syncable="YES"/>
-        <attribute name="reciever" attributeType="String" syncable="YES"/>
+        <attribute name="receiver" attributeType="String" syncable="YES"/>
         <attribute name="transaction_description" attributeType="String" syncable="YES"/>
         <relationship name="tran_category" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="DBCategory" inverseName="transaction" inverseEntity="DBCategory" syncable="YES"/>
         <relationship name="tran_currency" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="DBCurrency" inverseName="transaction" inverseEntity="DBCurrency" syncable="YES"/>

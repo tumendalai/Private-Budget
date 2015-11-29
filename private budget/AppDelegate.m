@@ -35,13 +35,26 @@
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"DBCategory" inManagedObjectContext:self.managedObjectContext];
     NSManagedObject *newCategory = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext];
     
+    NSManagedObject *newCategory1 = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext];
+    
     [newCategory setValue:@"cat_car" forKey:@"image"];
     [newCategory setValue:@"Боловсрол" forKey:@"name"];
     [newCategory setValue:@"0" forKey:@"type"];
     
+    [newCategory1 setValue:@"cat_daraa" forKey:@"image"];
+    [newCategory1 setValue:@"daraa" forKey:@"name"];
+    [newCategory1 setValue:@"0" forKey:@"type"];
+    
+    
     NSError *error = nil;
     
     if (![newCategory.managedObjectContext save:&error]) {
+        NSLog(@"Unable to save managed object context.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+    }
+    
+    error = nil;
+    if (![newCategory1.managedObjectContext save:&error]) {
         NSLog(@"Unable to save managed object context.");
         NSLog(@"%@, %@", error, error.localizedDescription);
     }
@@ -66,8 +79,39 @@
             NSLog(@"%@ %@", [person valueForKey:@"name"], [person valueForKey:@"image"]);
             
             NSLog(@"2 - %@", person);
+            
+//            [person setValue:@"Balala" forKey:@"name"];
+            
+            NSEntityDescription *entityAddress = [NSEntityDescription entityForName:@"DBTransaction" inManagedObjectContext:self.managedObjectContext];
+            NSManagedObject *newTransaction = [[NSManagedObject alloc] initWithEntity:entityAddress insertIntoManagedObjectContext:self.managedObjectContext];
+            
+            // Set First and Last Name
+            [newTransaction setValue:@"today" forKey:@"date"];
+            [newTransaction setValue:@"50000000" forKey:@"amount"];
+            [newTransaction setValue:@"1st receiver" forKey:@"receiver"];
+            [newTransaction setValue:@"1" forKey:@"is_income"];
+            [newTransaction setValue:@"1st transaction" forKey:@"transaction_description"];
+            
+            [person setValue:[NSSet setWithObject:newTransaction] forKey:@"transaction"];
+            
+            NSError *saveError = nil;
+            
+            if (![person.managedObjectContext save:&saveError]) {
+                NSLog(@"Unable to save managed object context.");
+                NSLog(@"%@, %@", saveError, saveError.localizedDescription);
+            }
+//            [self.managedObjectContext deleteObject:person];
+//            
+//            NSError *deleteError = nil;
+//            
+//            if (![person.managedObjectContext save:&deleteError]) {
+//                NSLog(@"Unable to save managed object context.");
+//                NSLog(@"%@, %@", deleteError, deleteError.localizedDescription);
+//            }
         }
     }
+    
+    
     
 //    HomeViewController *homeViewController = [[HomeViewController alloc] init];
 //    PlannedTransactionViewController* plannedTransactionViewController = [[PlannedTransactionViewController alloc] init];
