@@ -2,7 +2,7 @@
 //  DBCategory+CoreDataProperties.h
 //  private budget
 //
-//  Created by Enkhdulguun on 11/22/15.
+//  Created by enkhdulguun on 12/13/15.
 //  Copyright © 2015 tuguldur purevnyam. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,10 +15,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DBCategory (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) NSString *category_image;
-@property (nullable, nonatomic, retain) NSString *category_name;
-@property (nullable, nonatomic, retain) NSNumber *category_type;
-@property (nullable, nonatomic, retain) NSNumber *itemid;
+@property (nullable, nonatomic, retain) NSString *image;
+@property (nullable, nonatomic, retain) NSString *name;
+@property (nullable, nonatomic, retain) NSNumber *income;
+@property (nullable, nonatomic, retain) NSSet<DBPlannedTransaction *> *planned_transaction;
+@property (nullable, nonatomic, retain) NSSet<DBTransaction *> *transaction;
+
+@end
+
+@interface DBCategory (CoreDataGeneratedAccessors)
+
+- (void)addPlanned_transactionObject:(DBPlannedTransaction *)value;
+- (void)removePlanned_transactionObject:(DBPlannedTransaction *)value;
+- (void)addPlanned_transaction:(NSSet<DBPlannedTransaction *> *)values;
+- (void)removePlanned_transaction:(NSSet<DBPlannedTransaction *> *)values;
+
+- (void)addTransactionObject:(DBTransaction *)value;
+- (void)removeTransactionObject:(DBTransaction *)value;
+- (void)addTransaction:(NSSet<DBTransaction *> *)values;
+- (void)removeTransaction:(NSSet<DBTransaction *> *)values;
 
 @end
 

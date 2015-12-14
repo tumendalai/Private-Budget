@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "CenterViewController.h"
 #import "MainAbstractViewController.h"
+#import <CoreData/CoreData.h>
 
 @interface AddTransactionViewController : MainAbstractViewController
 
-
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, copy) void (^saveButtonClicked)();
 
 

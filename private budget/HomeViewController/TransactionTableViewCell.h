@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Transaction.h"
+#import "DBTransaction.h"
 
 @interface TransactionTableViewCell : UITableViewCell
 
@@ -20,6 +20,6 @@
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
 
-@property (nonatomic, strong) Transaction *transaction;
+@property (nonatomic, strong) DBTransaction *transaction;
 
 @end

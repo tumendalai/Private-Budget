@@ -7,10 +7,11 @@
 //
 
 #import "AddTransactionViewController.h"
-#import "CategoryObject.h"
+#import "DBCategory.h"
 #import "CategoryCell.h"
+#import "DBTransaction.h"
 
-@interface AddTransactionViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface AddTransactionViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UITextField  *descTextfield;
@@ -20,6 +21,10 @@
 @property (nonatomic, strong) UICollectionView *catCollectionView;
 @property (nonatomic, strong) NSArray *categoryArray;
 @property (nonatomic, strong) NSIndexPath       *selectedItemIndexPath;
+@property (strong, nonatomic) NSFetchedResultsController *categoryFetchedResultsController;
+@property (strong, nonatomic) NSBlockOperation *blockOperation;
+@property (strong, nonatomic) NSMutableArray *sectionChanges;
+@property (strong, nonatomic) NSMutableArray *itemChanges;
 
 
 @end
@@ -34,15 +39,13 @@
 @synthesize saveButton;
 @synthesize catCollectionView;
 @synthesize selectedItemIndexPath;
+@synthesize sectionChanges;
+@synthesize itemChanges;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [self categoryArray];
-    if (self.categoryArray.count > 0) {
-        selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    }
-    [self.catCollectionView reloadData];
+    [self getCategories];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,6 +72,18 @@
     if (![self formValidation]) {
         return;
     }
+    
+    NSEntityDescription *transaction_entity_desc = [NSEntityDescription entityForName:@"DBTransaction" inManagedObjectContext:self.managedObjectContext];
+    DBTransaction *newTransaction = [[DBTransaction alloc] initWithEntity:transaction_entity_desc insertIntoManagedObjectContext:self.managedObjectContext];
+    NSError *error = nil;
+    
+    if (![newTransaction.managedObjectContext save:&error]) {
+        NSLog(@"Unable to save managed object context.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+    } else {
+        //        [self.catCollectionView reloadData];
+        selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    }
 }
 
 #pragma mark -
@@ -76,17 +91,135 @@
 
 - (BOOL)formValidation {
     if (selectedItemIndexPath == nil) {
-        //        [SEUtils showAlert:NSLocalizedString(@"Зураг сонгоно уу!", nil)];
+//                [SEUtils showAlert:NSLocalizedString(@"Зураг сонгоно уу!", nil)];
+        return NO;
+    }
+    if (self.amountTextfield.text.length == 0) {
+        return NO;
+    }
+    if (self.descTextfield.text.length == 0) {
+        return NO;
+    }
+    if (self.resTextfield.text.length == 0) {
         return NO;
     }
     return YES;
 }
 
+- (void)getCategories {
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DBCategory"];
+    
+    // Add Sort Descriptors
+    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
+    
+    // Initialize Fetched Results Controller
+    self.categoryFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    
+    // Configure Fetched Results Controller
+    [self.categoryFetchedResultsController setDelegate:self];
+    
+    // Perform Fetch
+    NSError *error = nil;
+    [self.categoryFetchedResultsController performFetch:&error];
+    
+    if (error) {
+        NSLog(@"Unable to perform fetch.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+    }
+    
+    selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+}
+
+#pragma mark -
+#pragma mark Fetched Results Controller Delegate Methods
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    sectionChanges = [[NSMutableArray alloc] init];
+    itemChanges = [[NSMutableArray alloc] init];
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.catCollectionView performBatchUpdates:^{
+        for (NSDictionary *change in sectionChanges) {
+            [change enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                switch(type) {
+                    case NSFetchedResultsChangeInsert:
+                        [self.catCollectionView insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                        break;
+                    case NSFetchedResultsChangeDelete:
+                        [self.catCollectionView deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                        break;
+                    case NSFetchedResultsChangeUpdate:
+                        break;
+                    case NSFetchedResultsChangeMove:
+                        break;
+                }
+            }];
+        }
+        for (NSDictionary *change in itemChanges) {
+            [change enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                switch(type) {
+                    case NSFetchedResultsChangeInsert:
+                        [self.catCollectionView insertItemsAtIndexPaths:@[obj]];
+                        break;
+                    case NSFetchedResultsChangeDelete:
+                        [self.catCollectionView deleteItemsAtIndexPaths:@[obj]];
+                        break;
+                    case NSFetchedResultsChangeUpdate:
+                        [self.catCollectionView reloadItemsAtIndexPaths:@[obj]];
+                        break;
+                    case NSFetchedResultsChangeMove:
+                        [self.catCollectionView moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
+                        break;
+                }
+            }];
+        }
+    } completion:^(BOOL finished) {
+        sectionChanges = nil;
+        itemChanges = nil;
+    }];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller
+  didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex
+     forChangeType:(NSFetchedResultsChangeType)type {
+    NSMutableDictionary *change = [[NSMutableDictionary alloc] init];
+    change[@(type)] = @(sectionIndex);
+    [sectionChanges addObject:change];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    NSMutableDictionary *change = [[NSMutableDictionary alloc] init];
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            change[@(type)] = newIndexPath;
+            break;
+        case NSFetchedResultsChangeDelete:
+            change[@(type)] = indexPath;
+            break;
+        case NSFetchedResultsChangeUpdate:
+            change[@(type)] = indexPath;
+            break;
+        case NSFetchedResultsChangeMove:
+            change[@(type)] = @[indexPath, newIndexPath];
+            break;
+    }
+    [itemChanges addObject:change];
+}
+
 #pragma mark - UICollectionViewDataSource
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-    return self.categoryArray.count;
+    NSArray *sections = [self.categoryFetchedResultsController sections];
+    id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
+    
+    return [sectionInfo numberOfObjects];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -102,7 +235,7 @@
 - (void)configureCell:(CategoryCell *)cell
    forItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CategoryObject *category = [self.categoryArray objectAtIndex:indexPath.row];
+    DBCategory *category = [self.categoryFetchedResultsController objectAtIndexPath:indexPath];
     cell.category = category;
     cell.smallImageView.alpha = 0.6f;
     
@@ -116,69 +249,25 @@
 #pragma mark UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // always reload the selected cell, so we will add the border to that cell
-    
     NSMutableArray *indexPaths = [NSMutableArray arrayWithObject:indexPath];
-    
     if (self.selectedItemIndexPath)
     {
-        // if we had a previously selected cell
-        
         if ([indexPath compare:self.selectedItemIndexPath] == NSOrderedSame)
         {
-            // if it's the same as the one we just tapped on, then we're unselecting it
-            
             self.selectedItemIndexPath = nil;
         } else {
-            // if it's different, then add that old one to our list of cells to reload, and
-            // save the currently selected indexPath
-            
             [indexPaths addObject:self.selectedItemIndexPath];
             self.selectedItemIndexPath = indexPath;
         }
     } else {
-        // else, we didn't have previously selected cell, so we only need to save this indexPath for future reference
-        
         self.selectedItemIndexPath = indexPath;
     }
-    
-    // and now only reload only the cells that need updating
-    
     [collectionView reloadItemsAtIndexPaths:indexPaths];
 }
 
 
 #pragma mark -
 #pragma mark Getters
-- (NSArray *)categoryArray {
-    
-    if (categoryArray == nil) {
-        CategoryObject *category = [[CategoryObject alloc] init];
-        category.image = @"cat_car";
-        category.type = @"1";
-        category.name = @"Машин";
-        CategoryObject *category1 = [[CategoryObject alloc] init];
-        category1.image = @"cat_clothes";
-        category1.type = @"1";
-        category1.name = @"Хувцас";
-        CategoryObject *category2 = [[CategoryObject alloc] init];
-        category2.image = @"cat_education";
-        category2.type = @"1";
-        category2.name = @"Боловролын";
-        CategoryObject *category3 = [[CategoryObject alloc] init];
-        category3.image = @"cat_entertainment";
-        category3.type = @"1";
-        category3.name = @"Үзвэр";
-        CategoryObject *category4 = [[CategoryObject alloc] init];
-        category4.image = @"cat_gift";
-        category4.type = @"1";
-        category4.name = @"Бэлэг";
-        
-        categoryArray = @[category,category1,category3,category4];
-    }
-    return categoryArray;
-}
-
 - (UIScrollView *)scrollView {
     if (scrollView == nil) {
         scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-60)];
@@ -228,17 +317,19 @@
     
     if (catCollectionView == nil) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        catCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, 200) collectionViewLayout:layout];
+        catCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, 165) collectionViewLayout:layout];
         catCollectionView.backgroundColor = CLEAR_COLOR;
         catCollectionView.dataSource = self;
         catCollectionView.delegate = self;
         catCollectionView.alwaysBounceHorizontal = YES;
+        catCollectionView.layer.borderColor = [UIColor blackColor].CGColor;
+        catCollectionView.layer.borderWidth = 0.5f;
         
         layout.itemSize = CGSizeMake(90, 80);
         layout.minimumInteritemSpacing = 5;
         layout.minimumLineSpacing = 5;
-        layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-        layout.sectionInset = UIEdgeInsetsMake(26, 0, 0, 0);
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
         
         [catCollectionView registerClass:[CategoryCell class] forCellWithReuseIdentifier:@"CategoryCell"];
     }

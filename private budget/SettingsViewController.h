@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
-#import "CenterViewController.h"
 #import "MainAbstractViewController.h"
+#import <CoreData/CoreData.h>
 
 @interface SettingsViewController : MainAbstractViewController
 
 @property (nonatomic, copy) void (^addButtonClicked)();
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

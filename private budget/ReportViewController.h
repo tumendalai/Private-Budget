@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "CenterViewController.h"
 #import "MainAbstractViewController.h"
 #import "DashboardProductChartView.h"
+#import <CoreData/CoreData.h>
 
 @interface ReportViewController : MainAbstractViewController
 
 @property (nonatomic, strong) DashboardProductChartView *productChartView;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @end

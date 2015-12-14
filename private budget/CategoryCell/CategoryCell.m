@@ -8,7 +8,7 @@
 
 #import "CategoryCell.h"
 
-#define MY_SIZE     CGSizeMake(100, 80)
+#define MY_SIZE     CGSizeMake(90, 80)
 
 @interface CategoryCell()
 
@@ -50,7 +50,7 @@
 #pragma mark Getters
 - (UILabel *)nameLabel {
     if (nameLabel == nil) {
-        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 65, MY_SIZE.width-10, 15)];
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, MY_SIZE.width-20, 15)];
         nameLabel.backgroundColor = CLEAR_COLOR;
         nameLabel.textColor = BLACK_COLOR;
         nameLabel.font = FONT_NORMAL_SMALL;
@@ -62,7 +62,7 @@
 }
 - (UIImageView *)smallImageView {
     if (smallImageView == nil) {
-        smallImageView = [[UIImageView alloc] initWithFrame:CGRectMake(25, 5, 50, 50)];
+        smallImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 5, 50, 50)];
         smallImageView.backgroundColor = CLEAR_COLOR;
     }
     return smallImageView;

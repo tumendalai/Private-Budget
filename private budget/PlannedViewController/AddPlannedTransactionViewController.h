@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MainAbstractViewController.h"
+#import <CoreData/CoreData.h>
 
 @interface AddPlannedTransactionViewController : MainAbstractViewController
 
@@ -28,5 +29,5 @@
 @property (nonatomic, strong) UITextField *descriptionTextfield;
 @property (nonatomic, strong) UITextField *receiverTextfield;
 @property (nonatomic, strong) NSIndexPath *selectedItemIndexPath;
-
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @end

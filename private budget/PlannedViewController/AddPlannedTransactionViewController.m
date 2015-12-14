@@ -9,9 +9,13 @@
 #import "AddPlannedTransactionViewController.h"
 #import "PlannedTransactionTableViewCell.h"
 #import "CategoryCell.h"
+#import "DBCategory.h"
 
-@interface AddPlannedTransactionViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UITableViewDataSource, UITableViewDelegate>
+@interface AddPlannedTransactionViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UITableViewDataSource, UITableViewDelegate,NSFetchedResultsControllerDelegate>
 
+@property (strong, nonatomic) NSFetchedResultsController *plannedFetchedResultsController;
+@property (strong, nonatomic) NSFetchedResultsController *categoryFetchedResultsController;
+@property (strong, nonatomic) NSBlockOperation *blockOperation;
 @end
 
 @implementation AddPlannedTransactionViewController
@@ -38,12 +42,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     [self plannedTransactionArray];
-    [self.plannedTransactionsTableView reloadData];
     [self categoryArray];
-    if (self.categoryArray.count > 0) {
-        selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    }
-    [self.catCollectionView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,6 +67,58 @@
     [self.scrollView addSubview:self.catCollectionView];
     
     self.scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT+80);
+}
+
+#pragma mark -
+#pragma mark User
+
+-(void)getPlannedTransactions{
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DBPlannedTransaction"];
+    
+    // Add Sort Descriptors
+    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
+    
+    // Initialize Fetched Results Controller
+    self.plannedFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    
+    // Configure Fetched Results Controller
+    [self.plannedFetchedResultsController setDelegate:self];
+    
+    // Perform Fetch
+    NSError *error = nil;
+    [self.plannedFetchedResultsController performFetch:&error];
+    
+    if (error) {
+        NSLog(@"Unable to perform fetch.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+    }
+}
+
+
+- (void)getCategories {
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DBCategory"];
+    
+    // Add Sort Descriptors
+    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
+    
+    // Initialize Fetched Results Controller
+    self.categoryFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    
+    // Configure Fetched Results Controller
+    [self.categoryFetchedResultsController setDelegate:self];
+    
+    // Perform Fetch
+    NSError *error = nil;
+    [self.categoryFetchedResultsController performFetch:&error];
+    
+    if (error) {
+        NSLog(@"Unable to perform fetch.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+    }
+    
+    selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 }
 
 #pragma mark -
@@ -100,62 +151,114 @@
 }
 
 #pragma mark -
+#pragma mark Fetched Results Controller Delegate Methods
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    if (controller == self.plannedFetchedResultsController) {
+        [self.plannedTransactionsTableView beginUpdates];
+    } else {
+        self.blockOperation = [NSBlockOperation new];
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    if (controller == self.plannedFetchedResultsController) {
+        [self.plannedTransactionsTableView endUpdates];
+    } else {
+        [self.catCollectionView performBatchUpdates:^{
+            [self.blockOperation start];
+        } completion:^(BOOL finished) {
+            // Do whatever
+        }];
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    __weak UICollectionView *collectionView = self.catCollectionView;
+    switch (type) {
+        case NSFetchedResultsChangeInsert: {
+            if (controller == self.plannedFetchedResultsController) {
+                [self.plannedTransactionsTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            } else {
+                [self.blockOperation addExecutionBlock:^{
+                    [collectionView insertSections:[NSIndexSet indexSetWithIndex:newIndexPath.section] ];
+                }];
+            }
+            break;
+        }
+        case NSFetchedResultsChangeDelete: {
+            if (controller == self.plannedFetchedResultsController) {
+                [self.plannedTransactionsTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            } else {
+                [self.blockOperation addExecutionBlock:^{
+                    [collectionView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section]];
+                }];
+            }
+            break;
+        }
+        case NSFetchedResultsChangeUpdate: {
+            if (controller == self.plannedFetchedResultsController) {
+                [self configureCell:(PlannedTransactionTableViewCell *)[self.plannedTransactionsTableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            } else {
+                [self.blockOperation addExecutionBlock:^{
+                    [collectionView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section]];
+                }];
+            }
+            break;
+        }
+        case NSFetchedResultsChangeMove: {
+            if (controller == self.plannedFetchedResultsController) {
+                [self.plannedTransactionsTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [self.plannedTransactionsTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            } else {
+                [self.blockOperation addExecutionBlock:^{
+                    [collectionView moveSection:indexPath.section toSection:newIndexPath.section];
+                }];
+            }
+            break;
+        }
+    }
+}
+
+
+#pragma mark -
 #pragma mark UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [[self.plannedFetchedResultsController sections] count];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    if (self.plannedTransactionArray.count > 0)
-        return self.plannedTransactionArray.count;
-    else {
-        return 1;
-    }
+    NSArray *sections = [self.plannedFetchedResultsController sections];
+    id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
+    
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.plannedTransactionArray.count == 0 && indexPath.row == 0) {
-        
-        return nil;
-        
-    } else {
-        
-        static NSString *CellIdentifier = @"PlannedTransactionTableViewCell";
-        
-        PlannedTransactionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[PlannedTransactionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-        }
-        
-        cell.indexPath = indexPath;
-        
-        [self configureCell:cell forRowAtIndexPath:indexPath];
-        
-        return cell;
+    static NSString *CellIdentifier = @"PlannedTransactionTableViewCell";
+    
+    PlannedTransactionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[PlannedTransactionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     }
+    
+    cell.indexPath = indexPath;
+    
+    [self configureCell:cell atIndexPath:indexPath];
+    
+    return cell;
 }
 
-//- (EmptyTableViewCell *)getEmptyCell:(NSIndexPath *)indexPath tableView:(UITableView *)tableView {
-//    static NSString *CellIdentifier = @"EmptyTableViewCell";
-//
-//    EmptyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil) {
-//        cell = [[EmptyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    }
-//
-//    [cell layoutSubviews];
-//
-//    return cell;
-//}
-
 - (void)configureCell:(PlannedTransactionTableViewCell *)cell
-    forRowAtIndexPath:(NSIndexPath *)indexPath
+    atIndexPath:(NSIndexPath *)indexPath
 {
     cell.transaction = nil;
-    cell.transaction = [self.plannedTransactionArray objectAtIndex:indexPath.row];
+    cell.transaction = [self.plannedFetchedResultsController objectAtIndexPath:indexPath];
     
     [cell layoutSubviews];
 }
@@ -173,7 +276,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     return 60;
 }
 
@@ -188,7 +290,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-    return self.categoryArray.count;
+    NSArray *sections = [self.categoryFetchedResultsController sections];
+    id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
+    
+    return [sectionInfo numberOfObjects];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -204,7 +309,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)configureCell:(CategoryCell *)cell
    forItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CategoryObject *category = [self.categoryArray objectAtIndex:indexPath.row];
+    DBCategory *category = [self.categoryFetchedResultsController objectAtIndexPath:indexPath];
     cell.category = category;
     cell.smallImageView.alpha = 0.6f;
     
@@ -218,100 +323,27 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 #pragma mark UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // always reload the selected cell, so we will add the border to that cell
-    
     NSMutableArray *indexPaths = [NSMutableArray arrayWithObject:indexPath];
     
     if (self.selectedItemIndexPath)
     {
-        // if we had a previously selected cell
-        
         if ([indexPath compare:self.selectedItemIndexPath] == NSOrderedSame)
         {
-            // if it's the same as the one we just tapped on, then we're unselecting it
-            
             self.selectedItemIndexPath = nil;
         } else {
-            // if it's different, then add that old one to our list of cells to reload, and
-            // save the currently selected indexPath
-            
             [indexPaths addObject:self.selectedItemIndexPath];
             self.selectedItemIndexPath = indexPath;
         }
     } else {
-        // else, we didn't have previously selected cell, so we only need to save this indexPath for future reference
         
         self.selectedItemIndexPath = indexPath;
     }
-    
-    // and now only reload only the cells that need updating
     
     [collectionView reloadItemsAtIndexPaths:indexPaths];
 }
 
 #pragma mark -
 #pragma mark Getters
-- (NSArray *)categoryArray {
-    
-    
-    if (categoryArray == nil) {
-        CategoryObject *category = [[CategoryObject alloc] init];
-        category.image = @"cat_car";
-        category.type = @"1";
-        category.name = @"Машин";
-        CategoryObject *category1 = [[CategoryObject alloc] init];
-        category1.image = @"cat_clothes";
-        category1.type = @"1";
-        category1.name = @"Хувцас";
-        CategoryObject *category2 = [[CategoryObject alloc] init];
-        category2.image = @"cat_education";
-        category2.type = @"1";
-        category2.name = @"Боловролын";
-        CategoryObject *category3 = [[CategoryObject alloc] init];
-        category3.image = @"cat_entertainment";
-        category3.type = @"1";
-        category3.name = @"Үзвэр";
-        CategoryObject *category4 = [[CategoryObject alloc] init];
-        category4.image = @"cat_gift";
-        category4.type = @"1";
-        category4.name = @"Бэлэг";
-        
-        categoryArray = @[category,category1,category3,category4];
-    }
-    return categoryArray;
-}
-
--(NSArray*)plannedTransactionArray{
-    
-    if (plannedTransactionArray == nil){
-        PlannedTransaction *transaction = [[PlannedTransaction alloc] init];
-        transaction.amount = @"800000";
-        transaction.category_id = @"1";
-        transaction.currency_id = @"1";
-        transaction.date = @"27";
-        transaction.itemid = @"1";
-        transaction.reciever = @"Төгөлдөр";
-        transaction.transaction_description = @"Сарын цалин";
-        transaction.is_income = @"1";
-        transaction.startDate = @"2015-11-12 12:00:00";
-        transaction.endDate = @"2025-11-12 12:00:00";
-        
-        PlannedTransaction *transaction1 = [[PlannedTransaction alloc] init];
-        transaction1.amount = @"800000";
-        transaction1.category_id = @"1";
-        transaction1.currency_id = @"1";
-        transaction1.date = @"30";
-        transaction1.itemid = @"1";
-        transaction1.reciever = @"Төгөлдөр";
-        transaction1.transaction_description = @"Байрны лизинг";
-        transaction1.is_income = @"0";
-        transaction1.startDate = @"2015-11-12 12:00:00";
-        transaction1.endDate = @"2035-11-12 12:00:00";
-        
-        plannedTransactionArray = @[transaction,transaction1,transaction,transaction1,transaction1,transaction,transaction1,transaction];
-    }
-    return plannedTransactionArray;
-}
 
 - (UIScrollView *)scrollView {
     if (scrollView == nil) {
@@ -485,6 +517,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
         catCollectionView.dataSource = self;
         catCollectionView.delegate = self;
         catCollectionView.alwaysBounceHorizontal = YES;
+        catCollectionView.layer.borderColor = [UIColor blackColor].CGColor;
+        catCollectionView.layer.borderWidth = 0.5f;
         
         layout.itemSize = CGSizeMake(90, 80);
         layout.minimumInteritemSpacing = 5;

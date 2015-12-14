@@ -52,8 +52,8 @@
     self.receiverLabel.text = self.transaction.reciever;
     self.amountLabel.text = [NSString stringWithFormat:@"%@%@",self.transaction.is_income.boolValue ? @"+":@"-",self.transaction.amount];
     self.descriptionLabel.text = self.transaction.transaction_description;
-    self.startDateLabel.text = self.transaction.startDate;
-    self.endDateLabel.text = self.transaction.endDate;
+    self.startDateLabel.text = [self.transaction.start_date description];
+    self.endDateLabel.text = [self.transaction.end_date description];
     
 }
 

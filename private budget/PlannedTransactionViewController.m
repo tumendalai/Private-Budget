@@ -11,9 +11,10 @@
 #import "AddPlannedTransactionViewController.h"
 #import "PlannedTransaction.h"
 
-@interface PlannedTransactionViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface PlannedTransactionViewController ()<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) UIButton *addButton;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @end
 
 @implementation PlannedTransactionViewController
@@ -30,7 +31,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self configureView];
     [self testMethod];
-    [self.plannedTransactionsTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,31 +45,83 @@
 
 -(void)testMethod{
     
-    PlannedTransaction *transaction = [[PlannedTransaction alloc] init];
-    transaction.amount = @"800000";
-    transaction.category_id = @"1";
-    transaction.currency_id = @"1";
-    transaction.date = @"27";
-    transaction.itemid = @"1";
-    transaction.reciever = @"Төгөлдөр";
-    transaction.transaction_description = @"Сарын цалин";
-    transaction.is_income = @"1";
-    transaction.startDate = @"2015-11-12 12:00:00";
-    transaction.endDate = @"2025-11-12 12:00:00";
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DBPlannedTransaction"];
     
-    PlannedTransaction *transaction1 = [[PlannedTransaction alloc] init];
-    transaction1.amount = @"800000";
-    transaction1.category_id = @"1";
-    transaction1.currency_id = @"1";
-    transaction1.date = @"30";
-    transaction1.itemid = @"1";
-    transaction1.reciever = @"Төгөлдөр";
-    transaction1.transaction_description = @"Байрны лизинг";
-    transaction1.is_income = @"0";
-    transaction1.startDate = @"2015-11-12 12:00:00";
-    transaction1.endDate = @"2035-11-12 12:00:00";
+    // Add Sort Descriptors
+    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
     
-    plannedTransactionArray = @[transaction,transaction1,transaction,transaction1,transaction1,transaction,transaction1,transaction];
+    // Initialize Fetched Results Controller
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    
+    // Configure Fetched Results Controller
+    [self.fetchedResultsController setDelegate:self];
+    
+    // Perform Fetch
+    NSError *error = nil;
+    [self.fetchedResultsController performFetch:&error];
+    
+    if (error) {
+        NSLog(@"Unable to perform fetch.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+    }
+    
+//    PlannedTransaction *transaction = [[PlannedTransaction alloc] init];
+//    transaction.amount = @"800000";
+//    transaction.category_id = @"1";
+//    transaction.currency_id = @"1";
+//    transaction.date = @"27";
+//    transaction.itemid = @"1";
+//    transaction.reciever = @"Төгөлдөр";
+//    transaction.transaction_description = @"Сарын цалин";
+//    transaction.is_income = @"1";
+//    transaction.startDate = @"2015-11-12 12:00:00";
+//    transaction.endDate = @"2025-11-12 12:00:00";
+//    
+//    PlannedTransaction *transaction1 = [[PlannedTransaction alloc] init];
+//    transaction1.amount = @"800000";
+//    transaction1.category_id = @"1";
+//    transaction1.currency_id = @"1";
+//    transaction1.date = @"30";
+//    transaction1.itemid = @"1";
+//    transaction1.reciever = @"Төгөлдөр";
+//    transaction1.transaction_description = @"Байрны лизинг";
+//    transaction1.is_income = @"0";
+//    transaction1.startDate = @"2015-11-12 12:00:00";
+//    transaction1.endDate = @"2035-11-12 12:00:00";
+//    
+//    plannedTransactionArray = @[transaction,transaction1,transaction,transaction1,transaction1,transaction,transaction1,transaction];
+}
+
+#pragma mark -
+#pragma mark Fetched Results Controller Delegate Methods
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.plannedTransactionsTableView beginUpdates];
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.plannedTransactionsTableView endUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    switch (type) {
+        case NSFetchedResultsChangeInsert: {
+            [self.plannedTransactionsTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        }
+        case NSFetchedResultsChangeDelete: {
+            [self.plannedTransactionsTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        }
+        case NSFetchedResultsChangeUpdate: {
+            [self configureCell:(PlannedTransactionTableViewCell *)[self.plannedTransactionsTableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+        }
+        case NSFetchedResultsChangeMove: {
+            [self.plannedTransactionsTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self.plannedTransactionsTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        }
+    }
 }
 
 #pragma mark -
@@ -77,9 +129,8 @@
 
 -(void)addButtonClicked:(UIButton *)button{
     addPlannedTransactionViewController = [[AddPlannedTransactionViewController alloc] initWithNibName:nil bundle:nil];
-    addPlannedTransactionViewController.navController = self.navController;
     
-    [self.navController  pushViewController:addPlannedTransactionViewController animated:YES];
+    [self.navigationController  pushViewController:addPlannedTransactionViewController animated:YES];
 }
 
 -(void)backButtonClicked:(UIButton *)button {
@@ -90,61 +141,42 @@
 
 #pragma mark -
 #pragma mark UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [[self.fetchedResultsController sections] count];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    if (self.plannedTransactionArray.count > 0)
-        return self.plannedTransactionArray.count;
-    else {
-        return 1;
-    }
+    NSArray *sections = [self.fetchedResultsController sections];
+    id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
+    
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.plannedTransactionArray.count == 0 && indexPath.row == 0) {
-        
-        return nil;
-        
-    } else {
-        
-        static NSString *CellIdentifier = @"PlannedTransactionTableViewCell";
-        
-        PlannedTransactionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[PlannedTransactionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-        }
-        
-        cell.indexPath = indexPath;
-        
-        [self configureCell:cell forRowAtIndexPath:indexPath];
-        
-        return cell;
+    static NSString *CellIdentifier = @"PlannedTransactionTableViewCell";
+    
+    PlannedTransactionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[PlannedTransactionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    
+    cell.indexPath = indexPath;
+    
+    [self configureCell:cell atIndexPath:indexPath];
+    
+    return cell;
 }
 
-//- (EmptyTableViewCell *)getEmptyCell:(NSIndexPath *)indexPath tableView:(UITableView *)tableView {
-//    static NSString *CellIdentifier = @"EmptyTableViewCell";
-//
-//    EmptyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil) {
-//        cell = [[EmptyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    }
-//
-//    [cell layoutSubviews];
-//
-//    return cell;
-//}
-
 - (void)configureCell:(PlannedTransactionTableViewCell *)cell
-    forRowAtIndexPath:(NSIndexPath *)indexPath
+    atIndexPath:(NSIndexPath *)indexPath
 {
     cell.transaction = nil;
-    cell.transaction = [self.plannedTransactionArray objectAtIndex:indexPath.row];
+    cell.transaction = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     [cell layoutSubviews];
 }
@@ -173,7 +205,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (UITableView *)plannedTransactionsTableView {
     if (plannedTransactionsTableView == nil) {
-        plannedTransactionsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, SCREEN_WIDTH, SCREEN_HEIGHT-64-60) style:UITableViewStylePlain];
+        plannedTransactionsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, SCREEN_WIDTH, SCREEN_HEIGHT-64) style:UITableViewStylePlain];
         
         plannedTransactionsTableView.delegate = self;
         plannedTransactionsTableView.dataSource = self;

@@ -1,1 +1,5 @@
-../../../../CorePlot/framework/Source/_CPTAnimationNSDecimalPeriod.h
+#import "CPTAnimationPeriod.h"
+
+@interface _CPTAnimationNSDecimalPeriod : CPTAnimationPeriod
+
+@end

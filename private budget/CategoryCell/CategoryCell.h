@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CategoryObject.h"
+#import "DBCategory.h"
 
 @interface CategoryCell : UICollectionViewCell
 
-@property (nonatomic, strong) CategoryObject *category;
+@property (nonatomic, strong) DBCategory *category;
 
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UIImageView *smallImageView;

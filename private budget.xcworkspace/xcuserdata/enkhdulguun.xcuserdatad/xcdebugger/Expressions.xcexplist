@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[AppDelegate application:didFinishLaunchingWithOptions:]:AppDelegate.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "result.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[AddPlannedTransactionViewController collectionView:didSelectItemAtIndexPath:]:AddPlannedTransactionViewController.m">
          <PersistentStrings>
             <PersistentString
@@ -11,10 +19,18 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[AppDelegate application:didFinishLaunchingWithOptions:]:AppDelegate.m">
+         contextName = "-[RootViewController currencySegmentedControl]:RootViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "[(NSManagedObject *)[result objectAtIndex:15] valueForKey:@&quot;name&quot;]">
+               value = "self.currencyArray">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[RootViewController createCurrencyTypes]:RootViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "currency1.name">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

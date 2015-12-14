@@ -46,21 +46,19 @@
     [super layoutSubviews];
     
     if (indexPath.row % 2 != 0) {
-        self.transaction.is_income = @"0";
 //        self.contentView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.7f];
     } else {
-        self.transaction.is_income = @"1";
         self.contentView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5f];
     }
     
     if (self.transaction.is_income.boolValue) {
-        self.containerView.frame = CGRectMake(0, 0, SCREEN_WIDTH/2-10, self.contentView.bounds.size.height);
+        self.containerView.frame = CGRectMake(0, 0, SCREEN_WIDTH/2, self.contentView.bounds.size.height);
         
     } else {
-        self.containerView.frame = CGRectMake(SCREEN_WIDTH/2+10, 0, SCREEN_WIDTH/2-10, self.contentView.bounds.size.height);
+        self.containerView.frame = CGRectMake(SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2, self.contentView.bounds.size.height);
     }
-    self.dateLabel.text = self.transaction.date;
-    self.receiverLabel.text = self.transaction.reciever;
+//    self.dateLabel.text = [self.transaction.date descriptionWithLocale:[NSLocale new]];
+    self.receiverLabel.text = self.transaction.receiver;
     self.amountLabel.text =[NSString stringWithFormat:@"%@%@",self.transaction.is_income.boolValue ? @"+":@"-",self.transaction.amount];
     self.descriptionLabel.text = self.transaction.transaction_description;
 }
@@ -69,7 +67,7 @@
 #pragma mark Getters
 - (UILabel *)dateLabel {
     if (dateLabel == nil) {
-        dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, SCREEN_WIDTH/2, 15)];
+        dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH/2, 15)];
         dateLabel.backgroundColor = CLEAR_COLOR;
         dateLabel.textColor = BLACK_COLOR;
         dateLabel.font = FONT_NORMAL_SMALL;
@@ -78,7 +76,7 @@
 }
 - (UILabel *)receiverLabel {
     if (receiverLabel == nil) {
-        receiverLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 45, SCREEN_WIDTH/2, 15)];
+        receiverLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 45, SCREEN_WIDTH/2, 15)];
         receiverLabel.backgroundColor = CLEAR_COLOR;
         receiverLabel.textColor = BLACK_COLOR;
         receiverLabel.font = FONT_NORMAL_SMALL;
@@ -87,7 +85,7 @@
 }
 - (UILabel *)amountLabel {
     if (amountLabel == nil) {
-        amountLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 30, SCREEN_WIDTH/2, 15)];
+        amountLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, SCREEN_WIDTH/2, 15)];
         amountLabel.backgroundColor = CLEAR_COLOR;
         amountLabel.textColor = BLACK_COLOR;
         amountLabel.font = FONT_NORMAL_SMALL;
@@ -97,7 +95,7 @@
 }
 - (UILabel *)descriptionLabel {
     if (descriptionLabel == nil) {
-        descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 15, SCREEN_WIDTH/2, 15)];
+        descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 15, SCREEN_WIDTH/2, 15)];
         descriptionLabel.backgroundColor = CLEAR_COLOR;
         descriptionLabel.textColor = BLACK_COLOR;
         descriptionLabel.font = FONT_NORMAL_SMALL;

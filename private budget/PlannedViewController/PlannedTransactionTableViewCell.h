@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PlannedTransaction.h"
+#import "DBPlannedTransaction.h"
 
 @interface PlannedTransactionTableViewCell : UITableViewCell
 
@@ -21,6 +21,6 @@
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
 
-@property (nonatomic, strong) PlannedTransaction *transaction;
+@property (nonatomic, strong) DBPlannedTransaction *transaction;
 
 @end

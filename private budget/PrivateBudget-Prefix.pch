@@ -18,6 +18,8 @@
 #define USERDEF                             [NSUserDefaults standardUserDefaults]
 
 #define kSelectedCurrency                             @"kSelectedCurrency"
+#define kPassword                                     @"kPassword"
+
 
 #define CLEAR_COLOR                         [UIColor clearColor]
 

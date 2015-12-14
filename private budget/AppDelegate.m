@@ -12,135 +12,78 @@
 #import "ReportViewController.h"
 #import "SettingsViewController.h"
 #import "AddTransactionViewController.h"
-#import "RootViewController.h"
+#import "DBCurrency.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<UITabBarControllerDelegate>
+@property (nonatomic, strong) UITabBarController *tabBarController;
+@property (nonatomic, strong) AddTransactionViewController *addTransViewController;
+@property (nonatomic, strong) UIView *chooseCurrencyView;
+@property (nonatomic, strong) UIView *loginView;
+@property (nonatomic, strong) UISegmentedControl *currencySegmentedControl;
+@property (nonatomic, strong) NSMutableArray *currencyArray;
+@property (nonatomic, strong) UITextField *passTextfield;
+@property (nonatomic, strong) NSMutableArray *controllerArray;
 
 @end
 
 @implementation AppDelegate
-
+@synthesize tabBarController;
+@synthesize addTransViewController;
+@synthesize chooseCurrencyView;
+@synthesize loginView;
+@synthesize currencySegmentedControl;
+@synthesize passTextfield;
+@synthesize controllerArray;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    RootViewController *controller = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
-    navController.navigationBarHidden = YES;
-    self.window.rootViewController = navController;
     
+    tabBarController = [[UITabBarController alloc] initWithNibName:nil bundle:nil];
+    tabBarController.delegate = self;
+
+    HomeViewController *homeViewController = [[HomeViewController alloc] init];
+    PlannedTransactionViewController* plannedTransactionViewController = [[PlannedTransactionViewController alloc] init];
+    self.addTransViewController = [[AddTransactionViewController alloc] init];
+    ReportViewController* reportViewController = [[ReportViewController alloc] init];
+    SettingsViewController* settingsViewController = [[SettingsViewController alloc] init];
     
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"DBCategory" inManagedObjectContext:self.managedObjectContext];
-    NSManagedObject *newCategory = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext];
+    UINavigationController *plannedNavController = [[UINavigationController alloc] initWithRootViewController:plannedTransactionViewController];
+    plannedNavController.navigationBarHidden = YES;
     
-    NSManagedObject *newCategory1 = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext];
+    homeViewController.title = @"Home";
+    plannedTransactionViewController.title = @"Plan";
+    addTransViewController.title = @"Add";
+    reportViewController.title =@"Report";
+    settingsViewController.title =@"Settings";
     
-    [newCategory setValue:@"cat_car" forKey:@"image"];
-    [newCategory setValue:@"Боловсрол" forKey:@"name"];
-    [newCategory setValue:@"0" forKey:@"type"];
+    [homeViewController.tabBarItem setImage:[UIImage imageNamed:@"adress_button"]];
+    [plannedNavController.tabBarItem setImage:[UIImage imageNamed:@"tab_plan"]];
+    [addTransViewController.tabBarItem setImage:[UIImage imageNamed:@"button_add"]];
+    [reportViewController.tabBarItem setImage:[UIImage imageNamed:@"tab_review"]];
+    [settingsViewController.tabBarItem setImage:[UIImage imageNamed:@"tab_settings"]];
     
-    [newCategory1 setValue:@"cat_daraa" forKey:@"image"];
-    [newCategory1 setValue:@"daraa" forKey:@"name"];
-    [newCategory1 setValue:@"0" forKey:@"type"];
+    [homeViewController setManagedObjectContext:self.managedObjectContext];
+    [plannedTransactionViewController setManagedObjectContext:self.managedObjectContext];
+    [addTransViewController setManagedObjectContext:self.managedObjectContext];
+    [reportViewController setManagedObjectContext:self.managedObjectContext];
+    [settingsViewController setManagedObjectContext:self.managedObjectContext];
     
+    controllerArray = [NSMutableArray arrayWithObjects:
+                            homeViewController,
+                            plannedNavController,
+                            addTransViewController,
+                            reportViewController,
+                            settingsViewController, nil];
     
-    NSError *error = nil;
+    tabBarController.viewControllers = controllerArray;
+    [USERDEF setValue:@"1234" forKey:kPassword];
     
-    if (![newCategory.managedObjectContext save:&error]) {
-        NSLog(@"Unable to save managed object context.");
-        NSLog(@"%@, %@", error, error.localizedDescription);
-    }
+//    [self.tabBarController.view addSubview:self.loginView];
     
-    error = nil;
-    if (![newCategory1.managedObjectContext save:&error]) {
-        NSLog(@"Unable to save managed object context.");
-        NSLog(@"%@, %@", error, error.localizedDescription);
-    }
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DBCategory" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    error = nil;
-    NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    if (error) {
-        NSLog(@"Unable to execute fetch request.");
-        NSLog(@"%@, %@", error, error.localizedDescription);
-        
-    } else {
-        if (result.count > 0) {
-            NSManagedObject *person = (NSManagedObject *)[result objectAtIndex:0];
-            NSLog(@"1 - %@", person);
-            
-            NSLog(@"%@ %@", [person valueForKey:@"name"], [person valueForKey:@"image"]);
-            
-            NSLog(@"2 - %@", person);
-            
-//            [person setValue:@"Balala" forKey:@"name"];
-            
-            NSEntityDescription *entityAddress = [NSEntityDescription entityForName:@"DBTransaction" inManagedObjectContext:self.managedObjectContext];
-            NSManagedObject *newTransaction = [[NSManagedObject alloc] initWithEntity:entityAddress insertIntoManagedObjectContext:self.managedObjectContext];
-            
-            // Set First and Last Name
-            [newTransaction setValue:@"today" forKey:@"date"];
-            [newTransaction setValue:@"50000000" forKey:@"amount"];
-            [newTransaction setValue:@"1st receiver" forKey:@"receiver"];
-            [newTransaction setValue:@"1" forKey:@"is_income"];
-            [newTransaction setValue:@"1st transaction" forKey:@"transaction_description"];
-            
-            [person setValue:[NSSet setWithObject:newTransaction] forKey:@"transaction"];
-            
-            NSError *saveError = nil;
-            
-            if (![person.managedObjectContext save:&saveError]) {
-                NSLog(@"Unable to save managed object context.");
-                NSLog(@"%@, %@", saveError, saveError.localizedDescription);
-            }
-//            [self.managedObjectContext deleteObject:person];
-//            
-//            NSError *deleteError = nil;
-//            
-//            if (![person.managedObjectContext save:&deleteError]) {
-//                NSLog(@"Unable to save managed object context.");
-//                NSLog(@"%@, %@", deleteError, deleteError.localizedDescription);
-//            }
-        }
-    }
-    
-    
-    
-//    HomeViewController *homeViewController = [[HomeViewController alloc] init];
-//    PlannedTransactionViewController* plannedTransactionViewController = [[PlannedTransactionViewController alloc] init];
-//    AddTransactionViewController* addTransactionViewController = [[AddTransactionViewController alloc] init];
-//    ReportViewController* reportViewController = [[ReportViewController alloc] init];
-//    SettingsViewController* settingsViewController = [[SettingsViewController alloc] init];
-//    
-//    homeViewController.title = @"Home";
-//    plannedTransactionViewController.title = @"Plan";
-//    addTransactionViewController.title = @"Add";
-//    reportViewController.title =@"Report";
-//    settingsViewController.title =@"Settings";
-//    
-//    [homeViewController.tabBarItem setImage:[UIImage imageNamed:@"adress_button"]];
-//    [plannedTransactionViewController.tabBarItem setImage:[UIImage imageNamed:@"clock_selection"]];
-//    [addTransactionViewController.tabBarItem setImage:[UIImage imageNamed:@"baraa_add"]];
-//    [reportViewController.tabBarItem setImage:[UIImage imageNamed:@"grafic_button"]];
-//    [settingsViewController.tabBarItem setImage:[UIImage imageNamed:@"button_settings"]];
-//    
-//    NSArray* controllers = [NSArray arrayWithObjects:
-//                            homeViewController,
-//                            plannedTransactionViewController,
-//                            addTransactionViewController,
-//                            reportViewController,
-//                            settingsViewController, nil];
-//    
-//    tabBarController.viewControllers = controllers;
-//    
-//    self.window.rootViewController = tabBarController;
+    self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -168,6 +111,174 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+}
+
+
+#pragma mark - UITabBarController delegate
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController{
+    if ([viewController isKindOfClass:[AddTransactionViewController class]] || [viewController isKindOfClass:[HomeViewController class]]) {
+        if (![self.tabBarController.viewControllers containsObject:self.addTransViewController]) {
+            NSMutableArray *newTabs = [NSMutableArray arrayWithArray:self.tabBarController.viewControllers];
+            [newTabs insertObject:self.addTransViewController atIndex:2];
+            [UIView animateWithDuration:0.3f animations:^{
+                [self.tabBarController setViewControllers:newTabs];
+            } completion:nil];
+        }
+    } else if([viewController isKindOfClass:[UINavigationController class]] || [viewController isKindOfClass:[ReportViewController class]] || [viewController isKindOfClass:[SettingsViewController class]]) {
+        if ([self.tabBarController.viewControllers containsObject:self.addTransViewController]) {
+            NSMutableArray *newTabs = [NSMutableArray arrayWithArray:self.tabBarController.viewControllers];
+            [newTabs removeObject:self.addTransViewController];
+            [UIView animateWithDuration:0.3f animations:^{
+                [self.tabBarController setViewControllers:newTabs];
+            } completion:nil];
+        }
+    }
+}
+
+#pragma mark - UIAction
+- (void)currencySegmentedControlChanged:(UISegmentedControl *)segmentedControl {
+    self.chooseCurrencyView.hidden = YES;
+    [USERDEF setValue:[self.currencyArray objectAtIndex:segmentedControl.selectedSegmentIndex] forKey:kSelectedCurrency];
+}
+
+-(void)loginButtonClicked{
+    NSString *password = self.passTextfield.text;
+    if (password && password.length){
+        if ([[USERDEF valueForKey:kPassword] isEqualToString:password]) {
+            self.loginView.hidden = YES;
+            [self chooseCurrency];
+        } else {
+            self.passTextfield.text = @"";
+        }
+    } else {
+        // Show Alert View
+        [[[UIAlertView alloc] initWithTitle:@"Анхаар" message:@"Нууц үгээ оруулна уу!" delegate:nil cancelButtonTitle:@"За" otherButtonTitles:nil] show];
+    }
+}
+
+#pragma mark - Users
+
+-(void)chooseCurrency{
+    if ([USERDEF valueForKey:kSelectedCurrency] == nil) {
+        NSEntityDescription *currency_entity_desc = [NSEntityDescription entityForName:@"DBCurrency" inManagedObjectContext:self.managedObjectContext];
+        
+        DBCurrency *currency1 = [[DBCurrency alloc] initWithEntity:currency_entity_desc insertIntoManagedObjectContext:self.managedObjectContext];
+        currency1.image = @"mnt_currency";
+        currency1.name = @"MNT";
+        currency1.symbol = @"₮";
+        
+        DBCurrency *currency2 = [[DBCurrency alloc] initWithEntity:currency_entity_desc insertIntoManagedObjectContext:self.managedObjectContext];
+        currency2.image = @"dollar_currency";
+        currency2.name = @"USD";
+        currency2.symbol = @"$";
+        
+        DBCurrency *currency3 = [[DBCurrency alloc] initWithEntity:currency_entity_desc insertIntoManagedObjectContext:self.managedObjectContext];
+        currency3.image = @"currency_euro";
+        currency3.name = @"EUR";
+        currency3.symbol = @"€";
+        
+        NSError *error = nil;
+        
+        if (![currency1.managedObjectContext save:&error]) {
+            NSLog(@"Unable to save managed object context.");
+            NSLog(@"%@, %@", error, error.localizedDescription);
+        }
+        error = nil;
+        if (![currency2.managedObjectContext save:&error]) {
+            NSLog(@"Unable to save managed object context.");
+            NSLog(@"%@, %@", error, error.localizedDescription);
+        }
+        error = nil;
+        if (![currency3.managedObjectContext save:&error]) {
+            NSLog(@"Unable to save managed object context.");
+            NSLog(@"%@, %@", error, error.localizedDescription);
+        }
+        
+        // Currency
+        [self.tabBarController.view addSubview:self.chooseCurrencyView];
+        [self createCurrencyTypes];
+        [self.chooseCurrencyView addSubview:self.currencySegmentedControl];
+    }
+}
+
+-(void)createCurrencyTypes{
+    
+    chooseCurrencyView.hidden = NO;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DBCurrency" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error = nil;
+    error = nil;
+    NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if (error) {
+        NSLog(@"Unable to execute fetch request.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+        
+    } else {
+        if (result.count > 0) {
+            self.currencyArray = [NSMutableArray array];
+            for (DBCurrency *currency in result) {
+                [self.currencyArray addObject:currency.name];
+            }
+        }
+    }
+}
+
+#pragma mark - Getters
+
+-(UIView*)chooseCurrencyView{
+    if (chooseCurrencyView == nil) {
+        chooseCurrencyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        chooseCurrencyView.backgroundColor = [UIColor whiteColor];
+        {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, 150, SCREEN_WIDTH - 80, 25)];
+            label.text = @"Төлбөрийн нэгж";
+            label.textAlignment = NSTextAlignmentLeft;
+            [chooseCurrencyView addSubview:label];
+        }
+    }
+    return chooseCurrencyView;
+}
+
+-(UIView*)loginView{
+    if (loginView == nil) {
+        loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        loginView.backgroundColor = [UIColor whiteColor];
+        {
+            UITextField *passwordTextfield = [[UITextField alloc] initWithFrame:CGRectMake(40, SCREEN_HEIGHT/2-30, SCREEN_WIDTH-80, 25)];
+            passwordTextfield.layer.borderColor = [UIColor blackColor].CGColor;
+            passwordTextfield.layer.borderWidth = 0.5f;
+            passwordTextfield.placeholder = @"Нууц үг";
+            self.passTextfield = passwordTextfield;
+            [loginView addSubview:passwordTextfield];
+        }
+        {
+            UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            loginButton.frame = CGRectMake(50, SCREEN_HEIGHT/2, SCREEN_WIDTH-100, 25);
+            [loginButton setTitle:@"Нэвтрэх" forState:UIControlStateNormal];
+            loginButton.layer.borderWidth = 0.5f;
+            loginButton.layer.borderColor = [UIColor blackColor].CGColor;
+            [loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [loginButton addTarget:self action:@selector(loginButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+            [loginView addSubview:loginButton];
+        }
+    }
+    return loginView;
+}
+
+-(UISegmentedControl *)currencySegmentedControl{
+    if (currencySegmentedControl == nil){
+        currencySegmentedControl = [[UISegmentedControl alloc] initWithItems:self.currencyArray];
+        currencySegmentedControl.frame = CGRectMake(40, 190, SCREEN_WIDTH - 80, 34);
+        currencySegmentedControl.backgroundColor = [UIColor whiteColor];
+        [currencySegmentedControl addTarget:self action:@selector(currencySegmentedControlChanged:) forControlEvents: UIControlEventValueChanged];
+        currencySegmentedControl.tintColor = [UIColor blueColor];
+        currencySegmentedControl.layer.cornerRadius = 5;
+    }
+    return currencySegmentedControl;
 }
 
 #pragma mark - Core Data stack

@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CenterViewController.h"
 #import "MainAbstractViewController.h"
+
+#import <CoreData/CoreData.h>
 
 @interface HomeViewController : MainAbstractViewController
 
-@property (nonatomic, strong) CenterViewController *centerController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
