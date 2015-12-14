@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="15B42" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Automatic">
     <entity name="DBCategory" representedClassName="DBCategory" syncable="YES">
         <attribute name="image" attributeType="String" syncable="YES"/>
         <attribute name="income" attributeType="Boolean" syncable="YES"/>
@@ -31,8 +31,8 @@
         <attribute name="is_income" attributeType="Boolean" syncable="YES"/>
         <attribute name="receiver" attributeType="String" syncable="YES"/>
         <attribute name="transaction_description" attributeType="String" syncable="YES"/>
-        <relationship name="tran_category" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="DBCategory" inverseName="transaction" inverseEntity="DBCategory" syncable="YES"/>
-        <relationship name="tran_currency" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="DBCurrency" inverseName="transaction" inverseEntity="DBCurrency" syncable="YES"/>
+        <relationship name="tran_category" maxCount="1" deletionRule="Deny" destinationEntity="DBCategory" inverseName="transaction" inverseEntity="DBCategory" syncable="YES"/>
+        <relationship name="tran_currency" maxCount="1" deletionRule="Deny" destinationEntity="DBCurrency" inverseName="transaction" inverseEntity="DBCurrency" syncable="YES"/>
     </entity>
     <elements>
         <element name="DBCategory" positionX="-173" positionY="155" width="128" height="120"/>

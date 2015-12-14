@@ -1,5 +1,1 @@
-#import "CPTLayer.h"
-
-@interface CPTAxisLabelGroup : CPTLayer
-
-@end
+../../../../CorePlot/framework/Source/CPTAxisLabelGroup.h

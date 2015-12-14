@@ -7,11 +7,13 @@
 //
 
 #import "TransactionTableViewCell.h"
+#import "DBCategory.h"
+#import "DBCurrency.h"
 
 @interface TransactionTableViewCell()
 
 @property (nonatomic, strong) UIView *zuraasView;
-
+@property (nonatomic, strong) UIImageView *smallImageView;
 @end
 
 @implementation TransactionTableViewCell
@@ -25,6 +27,7 @@
 @synthesize transaction;
 @synthesize zuraasView;
 @synthesize containerView;
+@synthesize smallImageView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -36,6 +39,7 @@
         [self.containerView addSubview:self.receiverLabel];
         [self.containerView addSubview:self.amountLabel];
         [self.containerView addSubview:self.descriptionLabel];
+        [self.containerView addSubview:self.smallImageView];
         [self.contentView addSubview:self.zuraasView];
         
     }
@@ -57,17 +61,33 @@
     } else {
         self.containerView.frame = CGRectMake(SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2, self.contentView.bounds.size.height);
     }
-//    self.dateLabel.text = [self.transaction.date descriptionWithLocale:[NSLocale new]];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSLocale *enUSLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [formatter setLocale:enUSLocale];
+    
+    self.dateLabel.text = [formatter stringFromDate:self.transaction.date];
     self.receiverLabel.text = self.transaction.receiver;
-    self.amountLabel.text =[NSString stringWithFormat:@"%@%@",self.transaction.is_income.boolValue ? @"+":@"-",self.transaction.amount];
+    self.amountLabel.text =[NSString stringWithFormat:@"%@%@%@",self.transaction.is_income.boolValue ? @"+":@"-",self.transaction.amount,self.transaction.tran_currency.symbol];
     self.descriptionLabel.text = self.transaction.transaction_description;
+    [self.smallImageView setImage:[UIImage imageNamed:self.transaction.tran_category.image]];
 }
 
 #pragma mark -
 #pragma mark Getters
+
+- (UIImageView *)smallImageView {
+    if (smallImageView == nil) {
+        smallImageView = [[UIImageView alloc] initWithFrame:CGRectMake(115, 5, 40, 40)];
+        smallImageView.backgroundColor = CLEAR_COLOR;
+    }
+    return smallImageView;
+}
+
 - (UILabel *)dateLabel {
     if (dateLabel == nil) {
-        dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH/2, 15)];
+        dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 15)];
         dateLabel.backgroundColor = CLEAR_COLOR;
         dateLabel.textColor = BLACK_COLOR;
         dateLabel.font = FONT_NORMAL_SMALL;

@@ -1,5 +1,1 @@
-#import "_CPTXYTheme.h"
-
-@interface _CPTDarkGradientTheme : _CPTXYTheme
-
-@end
+../../../../CorePlot/framework/Source/_CPTDarkGradientTheme.h

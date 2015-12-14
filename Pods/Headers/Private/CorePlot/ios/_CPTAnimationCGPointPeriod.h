@@ -1,5 +1,1 @@
-#import "CPTAnimationPeriod.h"
-
-@interface _CPTAnimationCGPointPeriod : CPTAnimationPeriod
-
-@end
+../../../../CorePlot/framework/Source/_CPTAnimationCGPointPeriod.h

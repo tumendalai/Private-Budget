@@ -21,14 +21,16 @@
 		2C10C1461BE245900030289C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C10C1451BE245900030289C /* Default-568h@2x.png */; };
 		2C8BDF151BEEFEDE00DEFDD1 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8BDF141BEEFEDE00DEFDD1 /* ReportViewController.m */; };
 		2C8BDF181BEF00B900DEFDD1 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8BDF171BEF00B900DEFDD1 /* SettingsViewController.m */; };
-		4656803E1C1DBBCD0026FB5C /* DBCategory+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4656802F1C1DBBCD0026FB5C /* DBCategory+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
-		4656803F1C1DBBCD0026FB5C /* DBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 465680311C1DBBCD0026FB5C /* DBCategory.m */; settings = {ASSET_TAGS = (); }; };
-		465680401C1DBBCD0026FB5C /* DBPlannedTransaction+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 465680331C1DBBCD0026FB5C /* DBPlannedTransaction+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
-		465680411C1DBBCD0026FB5C /* DBPlannedTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 465680351C1DBBCD0026FB5C /* DBPlannedTransaction.m */; settings = {ASSET_TAGS = (); }; };
-		465680421C1DBBCD0026FB5C /* DBTransaction+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 465680371C1DBBCD0026FB5C /* DBTransaction+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
-		465680431C1DBBCD0026FB5C /* DBTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 465680391C1DBBCD0026FB5C /* DBTransaction.m */; settings = {ASSET_TAGS = (); }; };
-		465680441C1DBBCD0026FB5C /* DBCurrency+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4656803B1C1DBBCD0026FB5C /* DBCurrency+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
-		465680451C1DBBCD0026FB5C /* DBCurrency.m in Sources */ = {isa = PBXBuildFile; fileRef = 4656803D1C1DBBCD0026FB5C /* DBCurrency.m */; settings = {ASSET_TAGS = (); }; };
+		463E5E671C1EADCA00E029A7 /* DefaultLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 463E5E661C1EADCA00E029A7 /* DefaultLine.png */; };
+		463E5E6A1C1EBD3F00E029A7 /* ChooseIntervalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 463E5E691C1EBD3F00E029A7 /* ChooseIntervalController.m */; };
+		4656803E1C1DBBCD0026FB5C /* DBCategory+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4656802F1C1DBBCD0026FB5C /* DBCategory+CoreDataProperties.m */; };
+		4656803F1C1DBBCD0026FB5C /* DBCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 465680311C1DBBCD0026FB5C /* DBCategory.m */; };
+		465680401C1DBBCD0026FB5C /* DBPlannedTransaction+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 465680331C1DBBCD0026FB5C /* DBPlannedTransaction+CoreDataProperties.m */; };
+		465680411C1DBBCD0026FB5C /* DBPlannedTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 465680351C1DBBCD0026FB5C /* DBPlannedTransaction.m */; };
+		465680421C1DBBCD0026FB5C /* DBTransaction+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 465680371C1DBBCD0026FB5C /* DBTransaction+CoreDataProperties.m */; };
+		465680431C1DBBCD0026FB5C /* DBTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 465680391C1DBBCD0026FB5C /* DBTransaction.m */; };
+		465680441C1DBBCD0026FB5C /* DBCurrency+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4656803B1C1DBBCD0026FB5C /* DBCurrency+CoreDataProperties.m */; };
+		465680451C1DBBCD0026FB5C /* DBCurrency.m in Sources */ = {isa = PBXBuildFile; fileRef = 4656803D1C1DBBCD0026FB5C /* DBCurrency.m */; };
 		469242DD1C0874ED00FD1F9A /* CategoryImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 469242DB1C0874ED00FD1F9A /* CategoryImageCell.m */; };
 		46B1DBA51C03DB84002FCE4B /* MainAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1DBA41C03DB84002FCE4B /* MainAbstractViewController.m */; };
 		46B1DBCE1C04A715002FCE4B /* Digiface.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46B1DBC91C04A715002FCE4B /* Digiface.ttf */; };
@@ -134,6 +136,9 @@
 		2C8BDF161BEF00B900DEFDD1 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = "private budget/SettingsViewController.h"; sourceTree = SOURCE_ROOT; };
 		2C8BDF171BEF00B900DEFDD1 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = "private budget/SettingsViewController.m"; sourceTree = SOURCE_ROOT; };
 		412CE328F328AC99E72650A9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		463E5E661C1EADCA00E029A7 /* DefaultLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultLine.png; sourceTree = "<group>"; };
+		463E5E681C1EBD3F00E029A7 /* ChooseIntervalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseIntervalController.h; sourceTree = "<group>"; };
+		463E5E691C1EBD3F00E029A7 /* ChooseIntervalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseIntervalController.m; sourceTree = "<group>"; };
 		4656802E1C1DBBCD0026FB5C /* DBCategory+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBCategory+CoreDataProperties.h"; sourceTree = "<group>"; };
 		4656802F1C1DBBCD0026FB5C /* DBCategory+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBCategory+CoreDataProperties.m"; sourceTree = "<group>"; };
 		465680301C1DBBCD0026FB5C /* DBCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCategory.h; sourceTree = "<group>"; };
@@ -339,6 +344,7 @@
 				46EEA56B1C019E5300CAD336 /* button_back@2x.png */,
 				46EEA56E1C019E6D00CAD336 /* button_delete.png */,
 				46EEA56F1C019E6D00CAD336 /* button_delete@2x.png */,
+				463E5E661C1EADCA00E029A7 /* DefaultLine.png */,
 				46EEA57A1C019EDB00CAD336 /* edit.png */,
 				46EEA57B1C019EDB00CAD336 /* edit@2x.png */,
 			);
@@ -567,6 +573,8 @@
 				46B1DC041C054B6F002FCE4B /* DashboardLegendView.m */,
 				46B1DC061C054C2D002FCE4B /* LegendObject.h */,
 				46B1DC071C054C2D002FCE4B /* LegendObject.m */,
+				463E5E681C1EBD3F00E029A7 /* ChooseIntervalController.h */,
+				463E5E691C1EBD3F00E029A7 /* ChooseIntervalController.m */,
 			);
 			path = ReportViewController;
 			sourceTree = "<group>";
@@ -703,6 +711,7 @@
 				46EEA5641C019CED00CAD336 /* adress_button.png in Resources */,
 				46B1DBE81C04AF22002FCE4B /* cat_entertainment.png in Resources */,
 				46B1DBCF1C04A715002FCE4B /* Mogul Avanti Bold Italic.ttf in Resources */,
+				463E5E671C1EADCA00E029A7 /* DefaultLine.png in Resources */,
 				46B1DBEE1C04AF22002FCE4B /* cat_mortgage.png in Resources */,
 				46EEA57C1C019EDB00CAD336 /* edit.png in Resources */,
 				46EEA5651C019CED00CAD336 /* adress_button@2x.png in Resources */,
@@ -810,6 +819,7 @@
 				46B1DBFF1C054AE7002FCE4B /* XYPieChart.m in Sources */,
 				46BC16521C027CC600DB3A24 /* PlannedTransactionTableViewCell.m in Sources */,
 				46B1DBFA1C04E561002FCE4B /* CategoryCell.m in Sources */,
+				463E5E6A1C1EBD3F00E029A7 /* ChooseIntervalController.m in Sources */,
 				46B1DBF61C04C27C002FCE4B /* PlannedTransaction.m in Sources */,
 				465680401C1DBBCD0026FB5C /* DBPlannedTransaction+CoreDataProperties.m in Sources */,
 				469242DD1C0874ED00FD1F9A /* CategoryImageCell.m in Sources */,

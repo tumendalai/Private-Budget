@@ -1,4 +1,5 @@
 platform :ios, '7.0'
 pod 'CupertinoYankee'
+pod 'WYPopoverController', :git => 'https://github.com/nicolaschengdev/WYPopoverController.git'
 pod 'CorePlot', :git => 'https://github.com/core-plot/core-plot'
 pod 'PNChart'

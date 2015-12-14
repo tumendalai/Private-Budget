@@ -1,4 +1,1 @@
-/// @file
-
-typedef UIImage CPTNativeImage; ///< Platform-native image format.
-typedef UIEvent CPTNativeEvent; ///< Platform-native OS event.
+../../../../CorePlot/framework/iPhoneOnly/CPTPlatformSpecificDefines.h

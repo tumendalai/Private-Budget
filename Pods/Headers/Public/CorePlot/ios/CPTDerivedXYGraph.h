@@ -1,5 +1,1 @@
-#import "CPTXYGraph.h"
-
-@interface CPTDerivedXYGraph : CPTXYGraph
-
-@end
+../../../../CorePlot/framework/Source/CPTDerivedXYGraph.h

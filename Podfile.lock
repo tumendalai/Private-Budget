@@ -4,25 +4,33 @@ PODS:
   - PNChart (0.8.7):
     - UICountingLabel (~> 1.2.0)
   - UICountingLabel (1.2.0)
+  - WYPopoverController (0.1.8)
 
 DEPENDENCIES:
   - CorePlot (from `https://github.com/core-plot/core-plot`)
   - CupertinoYankee
   - PNChart
+  - WYPopoverController (from `https://github.com/nicolaschengdev/WYPopoverController.git`)
 
 EXTERNAL SOURCES:
   CorePlot:
     :git: https://github.com/core-plot/core-plot
+  WYPopoverController:
+    :git: https://github.com/nicolaschengdev/WYPopoverController.git
 
 CHECKOUT OPTIONS:
   CorePlot:
     :commit: 7dc7634e4407b358a292a62a782e60238b9b8a08
     :git: https://github.com/core-plot/core-plot
+  WYPopoverController:
+    :commit: a5fc1276f3e7ae9bfbf97f5e7b504f18005f5e92
+    :git: https://github.com/nicolaschengdev/WYPopoverController.git
 
 SPEC CHECKSUMS:
   CorePlot: c1e9eeb17628baba3ab5ea63600d73d7e948d1c4
   CupertinoYankee: c288994087c791657fce35a43d2a604e64eef23e
   PNChart: c1755716bbd45386d2035b2bf2ce73e6d3f8cb22
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
+  WYPopoverController: a7f420833d355d868e5836415ba07ce0dbec1a27
 
 COCOAPODS: 0.39.0

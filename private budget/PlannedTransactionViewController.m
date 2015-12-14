@@ -64,32 +64,6 @@
         NSLog(@"Unable to perform fetch.");
         NSLog(@"%@, %@", error, error.localizedDescription);
     }
-    
-//    PlannedTransaction *transaction = [[PlannedTransaction alloc] init];
-//    transaction.amount = @"800000";
-//    transaction.category_id = @"1";
-//    transaction.currency_id = @"1";
-//    transaction.date = @"27";
-//    transaction.itemid = @"1";
-//    transaction.reciever = @"Төгөлдөр";
-//    transaction.transaction_description = @"Сарын цалин";
-//    transaction.is_income = @"1";
-//    transaction.startDate = @"2015-11-12 12:00:00";
-//    transaction.endDate = @"2025-11-12 12:00:00";
-//    
-//    PlannedTransaction *transaction1 = [[PlannedTransaction alloc] init];
-//    transaction1.amount = @"800000";
-//    transaction1.category_id = @"1";
-//    transaction1.currency_id = @"1";
-//    transaction1.date = @"30";
-//    transaction1.itemid = @"1";
-//    transaction1.reciever = @"Төгөлдөр";
-//    transaction1.transaction_description = @"Байрны лизинг";
-//    transaction1.is_income = @"0";
-//    transaction1.startDate = @"2015-11-12 12:00:00";
-//    transaction1.endDate = @"2035-11-12 12:00:00";
-//    
-//    plannedTransactionArray = @[transaction,transaction1,transaction,transaction1,transaction1,transaction,transaction1,transaction];
 }
 
 #pragma mark -

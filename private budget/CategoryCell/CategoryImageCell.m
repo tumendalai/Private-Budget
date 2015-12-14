@@ -44,7 +44,7 @@
 #pragma mark Getters
 - (UIImageView *)smallImageView {
     if (smallImageView == nil) {
-        smallImageView = [[UIImageView alloc] initWithFrame:CGRectMake(25, 5, 40, 40)];
+        smallImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 40, 40)];
         smallImageView.backgroundColor = CLEAR_COLOR;
     }
     return smallImageView;

@@ -1,5 +1,1 @@
-#import "CPTAxisLabel.h"
-
-@interface CPTAxisTitle : CPTAxisLabel
-
-@end
+../../../../CorePlot/framework/Source/CPTAxisTitle.h

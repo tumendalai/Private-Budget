@@ -1,5 +1,1 @@
-#import "CPTAnimationPeriod.h"
-
-@interface _CPTAnimationCGSizePeriod : CPTAnimationPeriod
-
-@end
+../../../../CorePlot/framework/Source/_CPTAnimationCGSizePeriod.h

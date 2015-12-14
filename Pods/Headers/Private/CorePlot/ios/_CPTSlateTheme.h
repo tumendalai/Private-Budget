@@ -1,5 +1,1 @@
-#import "_CPTXYTheme.h"
-
-@interface _CPTSlateTheme : _CPTXYTheme
-
-@end
+../../../../CorePlot/framework/Source/_CPTSlateTheme.h

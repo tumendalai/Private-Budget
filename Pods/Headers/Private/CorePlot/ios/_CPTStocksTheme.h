@@ -1,5 +1,1 @@
-#import "_CPTXYTheme.h"
-
-@interface _CPTStocksTheme : _CPTXYTheme
-
-@end
+../../../../CorePlot/framework/Source/_CPTStocksTheme.h

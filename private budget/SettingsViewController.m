@@ -83,7 +83,7 @@
     DBCategory *newCategory = [[DBCategory alloc] initWithEntity:category_entity_desc insertIntoManagedObjectContext:self.managedObjectContext];
     
     newCategory.name = self.nameTextfield.text;
-    newCategory.income = [NSNumber numberWithInteger:self.incomeOrExpenseSegmentedControl.selectedSegmentIndex];
+    newCategory.income = [NSNumber numberWithInt:self.incomeOrExpenseSegmentedControl.selectedSegmentIndex == 0 ? 1:0];
     newCategory.image = [self.categoryImageArray objectAtIndex:selectedItemIndexPath.row];
     
     NSError *error = nil;

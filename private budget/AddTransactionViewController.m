@@ -74,15 +74,43 @@
     }
     
     NSEntityDescription *transaction_entity_desc = [NSEntityDescription entityForName:@"DBTransaction" inManagedObjectContext:self.managedObjectContext];
-    DBTransaction *newTransaction = [[DBTransaction alloc] initWithEntity:transaction_entity_desc insertIntoManagedObjectContext:self.managedObjectContext];
-    NSError *error = nil;
     
-    if (![newTransaction.managedObjectContext save:&error]) {
-        NSLog(@"Unable to save managed object context.");
-        NSLog(@"%@, %@", error, error.localizedDescription);
+    DBCategory *category = [self.categoryFetchedResultsController objectAtIndexPath:selectedItemIndexPath];
+   
+    DBTransaction *newTransaction = [[DBTransaction alloc] initWithEntity:transaction_entity_desc insertIntoManagedObjectContext:self.managedObjectContext];
+    
+    newTransaction.amount =[NSNumber numberWithDouble:self.amountTextfield.text.doubleValue];
+    newTransaction.date = [NSDate date];
+    newTransaction.is_income = category.income;
+    newTransaction.receiver = self.resTextfield.text;
+    newTransaction.transaction_description = self.descTextfield.text;
+    newTransaction.tran_category = category;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DBCurrency"];
+    
+    // Create Predicate
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"name", [USERDEF stringForKey:kSelectedCurrency]];
+    [fetchRequest setPredicate:predicate];
+    
+    // Execute Fetch Request
+    NSError *fetchError = nil;
+    NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:&fetchError];
+    
+    if (!fetchError) {
+        newTransaction.tran_currency = [result firstObject];
+        
+        NSError *error = nil;
+        
+        if (![newTransaction.managedObjectContext save:&error]) {
+            NSLog(@"Unable to save managed object context.");
+            NSLog(@"%@, %@", error, error.localizedDescription);
+        } else {
+            //        [self.catCollectionView reloadData];
+            selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        }
     } else {
-        //        [self.catCollectionView reloadData];
-        selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        NSLog(@"Error fetching data.");
+        NSLog(@"%@, %@", fetchError, fetchError.localizedDescription);
     }
 }
 
