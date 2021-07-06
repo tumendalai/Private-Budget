@@ -9,12 +9,16 @@
 #import <UIKit/UIKit.h>
 
 #import "MainAbstractViewController.h"
-#import "DashboardProductChartView.h"
+#import "DashboardTransactionChartView.h"
 #import <CoreData/CoreData.h>
 
 @interface ReportViewController : MainAbstractViewController
 
-@property (nonatomic, strong) DashboardProductChartView *productChartView;
+@property (nonatomic, strong) DashboardTransactionChartView *inTransactionChartView;
+@property (nonatomic, strong) DashboardTransactionChartView *outTransactionChartView;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (assign, nonatomic) NSInteger selectedIndex;
+
+-(void)makePieChart;
 
 @end

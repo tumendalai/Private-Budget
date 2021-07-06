@@ -19,4 +19,6 @@
 @property (nonatomic, copy) void (^backClicked)();
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+-(void)getPlannedTransactions;
+-(void)reload;
 @end

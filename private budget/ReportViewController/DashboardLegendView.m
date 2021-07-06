@@ -1,17 +1,15 @@
 //
 //  DashboardLegendScrollView.m
-//  iRestaurantRepo
+//  private budget
 //
-//  Created by Sodtseren Enkhee on 6/13/14.
-//  Copyright (c) 2014 Sodtseren Enkhee. All rights reserved.
+//  Created by tuguldur purevnyam on 29.10.15.
+//  Copyright © 2015 tuguldur purevnyam. All rights reserved.
 //
-
 #import "DashboardLegendView.h"
 #import "LegendObject.h"
 
 @interface DashboardLegendView()<UIScrollViewDelegate>
 
-@property (nonatomic, strong) UIScrollView *myScrollView;
 
 @end
 
@@ -22,6 +20,9 @@
 @synthesize valueFont;
 @synthesize nameOffset;
 @synthesize myScrollView;
+@synthesize is_pie_chart;
+@synthesize nameTextAlignment;
+@synthesize is_numbered;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -38,6 +39,7 @@
     
     int boundY = 0;
     int height = legendHeight;
+    int number = 1;
     
     for (LegendObject *legend in self.legendArray) {
         {
@@ -53,16 +55,22 @@
                 nameLabel.backgroundColor = CLEAR_COLOR;
                 nameLabel.textColor = BLACK_COLOR;
                 nameLabel.font = self.nameFont;
-                nameLabel.textAlignment = NSTextAlignmentRight;
+                nameLabel.textAlignment = nameTextAlignment;
                 [legendView addSubview:nameLabel];
                 
                 nameLabel.text = legend.name;
+                if (is_numbered) {
+                    nameLabel.text = [NSString stringWithFormat:@"%d. %@",number,nameLabel.text];
+                    number++;
+                }
             }
             {
                 UIView *colorView = [[UIView alloc] initWithFrame:CGRectMake(x+5, 5, height-10, height-10)];
                 x += height;
                 colorView.backgroundColor = legend.color;
-                colorView.layer.cornerRadius = (height-10)/2;
+                if (is_pie_chart) {
+                    colorView.layer.cornerRadius = (height-10)/2;
+                }
                 [legendView addSubview:colorView];
             }
             {
@@ -72,11 +80,10 @@
                 valueLabel.font = self.valueFont;
                 [legendView addSubview:valueLabel];
                 
-                valueLabel.text = legend.myvalue;
+                valueLabel.text = [NSString stringWithFormat:@"%@%@",legend.myvalue,legend.symbol];
             }
         }
     }
-    
     self.myScrollView.contentSize = CGSizeMake(self.myScrollView.bounds.size.width, boundY);
 }
 

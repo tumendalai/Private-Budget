@@ -13,7 +13,7 @@
 
 @interface SettingsViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIScrollView *sScrollView;
 @property (nonatomic, strong) UITextField  *nameTextfield;
 @property (nonatomic, strong) UIButton *addButton;
 @property (nonatomic, strong) UIButton *resetButton;
@@ -25,15 +25,15 @@
 @property (nonatomic, strong) NSArray *categoryImageArray;
 @property (nonatomic, strong) NSIndexPath       *selectedItemIndexPath;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) NSBlockOperation *blockOperation;
 @property (strong, nonatomic) NSMutableArray *sectionChanges;
 @property (strong, nonatomic) NSMutableArray *itemChanges;
+@property (strong, nonatomic) UITapGestureRecognizer *tap;
 
 @end
 
 @implementation SettingsViewController
 @synthesize addButtonClicked;
-@synthesize scrollView;
+@synthesize sScrollView;
 @synthesize nameTextfield;
 @synthesize categoryArray;
 @synthesize addButton;
@@ -46,12 +46,35 @@
 @synthesize incomeOrExpenseSegmentedControl;
 @synthesize sectionChanges;
 @synthesize itemChanges;
+@synthesize persistentStoreCoordinator;
+@synthesize tap;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self getCategories];
     [self categoryImageArray];
-    selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self refresh_data];
+    [self.backButton setHidden:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidHide:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.view removeGestureRecognizer:self.tap];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,16 +83,84 @@
 
 -(void)configureView{
     [super configureView];
-    [self.view addSubview:self.scrollView];
-    [self.scrollView addSubview:self.nameTextfield];
-    [self.scrollView addSubview:self.addButton];
-    [self.scrollView addSubview:self.categoryLabel];
-    [self.scrollView addSubview:self.resetButton];
-    [self.scrollView addSubview:self.catImageCollectionView];
-    [self.scrollView addSubview:self.catCollectionView];
-    [self.scrollView addSubview:self.incomeOrExpenseSegmentedControl];
+    [self.view addSubview:self.sScrollView];
+    [self.sScrollView addSubview:self.nameTextfield];
+    [self.sScrollView addSubview:self.addButton];
+    [self.sScrollView addSubview:self.categoryLabel];
+    [self.sScrollView addSubview:self.resetButton];
+    [self.sScrollView addSubview:self.catImageCollectionView];
+    [self.sScrollView addSubview:self.catCollectionView];
+    [self.sScrollView addSubview:self.incomeOrExpenseSegmentedControl];
     
-    self.scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, 430);
+    self.sScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, 480);
+}
+#pragma mark -
+#pragma mark KeyboardDelegate
+#pragma mark -
+- (void)keyboardDidShow: (NSNotification *) notif {
+    [self.view addGestureRecognizer:self.tap];
+    
+    // Do something here
+    UIScrollView *scrollView = self.sScrollView;
+    
+    NSDictionary *userInfo = [notif userInfo];
+    
+    NSValue *animationCurveObject = [userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey];
+    NSValue *animationDurationObject = [userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSValue *keyboardEndRectObject = [userInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    NSUInteger animationCurve = 0;
+    double animationDuration = 0.0f;
+    CGRect keyboardEndRect = CGRectMake(0, 0, 0, 0);
+    
+    [animationCurveObject getValue:&animationCurve];
+    [animationDurationObject getValue:&animationDuration];
+    [keyboardEndRectObject getValue:&keyboardEndRect];
+    
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    keyboardEndRect = [self.view convertRect:keyboardEndRect fromView:window];
+    
+    [UIView beginAnimations:@"changeTableViewContentInset" context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    [UIView setAnimationCurve:(UIViewAnimationCurve)animationCurve];
+    
+    CGRect intersectionOfKeyboardRectAndWindowRect = CGRectIntersection(window.frame, keyboardEndRect);
+    CGFloat bottomInset = intersectionOfKeyboardRectAndWindowRect.size.height;
+    scrollView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, bottomInset, 0.0f);
+    
+    [UIView commitAnimations];
+}
+
+- (void)keyboardDidHide: (NSNotification *) notif {
+    [self.view removeGestureRecognizer:self.tap];
+    
+    // Do something here
+    UIScrollView *scrollView = self.sScrollView;
+    
+    if (UIEdgeInsetsEqualToEdgeInsets(scrollView.contentInset, UIEdgeInsetsZero))
+        return;
+    
+    NSDictionary *userInfo = [notif userInfo];
+    
+    NSValue *animationCurveObject = [userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey];
+    NSValue *animationDurationObject = [userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSValue *keyboardEndRectObject = [userInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    NSUInteger animationCurve = 0;
+    double animationDuration = 0.0f;
+    CGRect keyboardEndRect = CGRectMake(0, 0, 0, 0);
+    
+    [animationCurveObject getValue:&animationCurve];
+    [animationDurationObject getValue:&animationDuration];
+    [keyboardEndRectObject getValue:&keyboardEndRect];
+    
+    [UIView beginAnimations:@"changeTableViewContentInset" context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    [UIView setAnimationCurve:(UIViewAnimationCurve)animationCurve];
+    
+    scrollView.contentInset = UIEdgeInsetsZero;
+    
+    [UIView commitAnimations];
 }
 
 #pragma mark -
@@ -92,16 +183,41 @@
         NSLog(@"Unable to save managed object context.");
         NSLog(@"%@, %@", error, error.localizedDescription);
     } else {
-//        [self.catCollectionView reloadData];
-        selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self refresh_data];
     }
 }
 
 -(void)resetButtonClicked:(UIButton *)button{
+
+    [self deleteAllEntities:@"DBCategory"];
+    [self deleteAllEntities:@"DBCurrency"];
+    [self deleteAllEntities:@"DBTransaction"];
+    [self deleteAllEntities:@"DBPlannedTransaction"];
+    [USERDEF setValue:nil forKey:kSelectedCurrency];
+    [APPDEL saveContext];
+    [APPDEL chooseCurrency];
+}
+
+- (void)deleteAllEntities:(NSString *)nameEntity
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:nameEntity];
+    [fetchRequest setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+    
+    NSError *error;
+    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    for (NSManagedObject *object in fetchedObjects)
+    {
+        [self.managedObjectContext deleteObject:object];
+    }
 }
 
 - (void)incomeOrExpenseSegmentedControlChanged:(UISegmentedControl *)segmentedControl {
     
+}
+
+#pragma mark - tap
+- (void)handleTap:(UITapGestureRecognizer *)recognizer {
+    [self.view endEditing:YES];
 }
 
 #pragma mark -
@@ -109,10 +225,11 @@
 
 - (BOOL)formValidation {
     if (selectedItemIndexPath == nil) {
-        //        [SEUtils showAlert:NSLocalizedString(@"Зураг сонгоно уу!", nil)];
+        [[[UIAlertView alloc] initWithTitle:@"Анхаар" message:@"Зураг сонгоно уу!" delegate:nil cancelButtonTitle:@"За" otherButtonTitles:nil] show];
         return NO;
     }
     if (self.nameTextfield.text.length == 0) {
+        [[[UIAlertView alloc] initWithTitle:@"Анхаар" message:@"Нэр оруулна уу!" delegate:nil cancelButtonTitle:@"За" otherButtonTitles:nil] show];
         return NO;
     }
     return YES;
@@ -143,21 +260,27 @@
 - (NSArray *)categoryImageArray {
     
     if (categoryImageArray == nil) {
-        categoryImageArray = @[@"cat_car",
-                               @"cat_clothes",
-                               @"cat_education",
-                               @"cat_entertainment",
-                               @"cat_food",
-                               @"cat_fun",
-                               @"cat_gift",
-                               @"cat_household",
-                               @"cat_medicine",
-                               @"cat_mortgage",
-                               @"cat_personal",
-                               @"cat_transport"];
+        categoryImageArray = @[@"Number_0",
+                               @"Number_1",
+                               @"Number_2",
+                               @"Number_3",
+                               @"Number_4",
+                               @"Number_5",
+                               @"Number_6",
+                               @"Number_7",
+                               @"Number_8",
+                               @"Number_9",];
     }
     
     return categoryImageArray;
+}
+
+-(void)refresh_data{
+    selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.catImageCollectionView reloadData];
+    [self.catImageCollectionView selectItemAtIndexPath:selectedItemIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionLeft];
+    self.nameTextfield.text = @"";
+    self.incomeOrExpenseSegmentedControl.selectedSegmentIndex = 0;
 }
 
 #pragma mark -
@@ -320,18 +443,24 @@
 #pragma mark -
 #pragma mark Getters
 
-- (UIScrollView *)scrollView {
-    if (scrollView == nil) {
-        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-60)];
-        scrollView.backgroundColor = CLEAR_COLOR;
-//        scrollView.delegate = self;
-        scrollView.showsVerticalScrollIndicator = NO;
-        scrollView.showsHorizontalScrollIndicator = NO;
-        scrollView.decelerationRate = 0.1f;
-        scrollView.pagingEnabled = NO;
-        scrollView.alwaysBounceVertical = YES;
+- (UIScrollView *)sScrollView {
+    if (sScrollView == nil) {
+        sScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-60)];
+        sScrollView.backgroundColor = CLEAR_COLOR;
+        sScrollView.showsVerticalScrollIndicator = NO;
+        sScrollView.showsHorizontalScrollIndicator = NO;
+        sScrollView.decelerationRate = 0.1f;
+        sScrollView.pagingEnabled = NO;
+        sScrollView.alwaysBounceVertical = YES;
     }
-    return scrollView;
+    return sScrollView;
+}
+
+-(UITapGestureRecognizer *)tap{
+    if (tap == nil) {
+        tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    }
+    return tap;
 }
 
 - (UICollectionView *)catCollectionView {
@@ -344,7 +473,7 @@
         catCollectionView.delegate = self;
         catCollectionView.alwaysBounceHorizontal = YES;
         catCollectionView.layer.borderColor = [UIColor blackColor].CGColor;
-        catCollectionView.layer.borderWidth = 0.5f;
+        catCollectionView.layer.borderWidth = 1;
         
         layout.itemSize = CGSizeMake(90, 80);
         layout.minimumInteritemSpacing = 5;
@@ -359,10 +488,11 @@
 
 - (UILabel *)categoryLabel {
     if (categoryLabel == nil) {
-        categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/4, 210, SCREEN_WIDTH/2, 25)];
+        categoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/4, 185, SCREEN_WIDTH/2, 25)];
         categoryLabel.backgroundColor = CLEAR_COLOR;
         categoryLabel.textColor = BLACK_COLOR;
         categoryLabel.textAlignment = NSTextAlignmentCenter;
+        categoryLabel.font = FONT_NORMAL;
         categoryLabel.text = @"Категори нэмэх";
     }
     return categoryLabel;
@@ -370,17 +500,13 @@
 
 - (UITextField *)nameTextfield {
     if (nameTextfield == nil) {
-        nameTextfield = [[UITextField alloc] initWithFrame:CGRectMake(20, 245, SCREEN_WIDTH-40, 20)];
+        nameTextfield = [[MyTextField alloc] initWithFrame:CGRectMake(20, 225, SCREEN_WIDTH-40, 30)];
         nameTextfield.layer.borderColor = [UIColor blackColor].CGColor;
-        nameTextfield.layer.borderWidth = 0.2f;
-        nameTextfield.layer.cornerRadius = 3.0f;
         nameTextfield.backgroundColor = [UIColor whiteColor];
-        //        nameTextfield.delegate = self;
         nameTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
         nameTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
-        //        [nameTextfield addTarget:self action:@selector(textDidChange) forControlEvents:UIControlEventEditingChanged];
         nameTextfield.font = FONT_NORMAL_SMALL;
-        nameTextfield.placeholder = @" Нэр";
+        nameTextfield.placeholder = @"Нэр";
     }
     return nameTextfield;
 }
@@ -395,7 +521,7 @@
         catImageCollectionView.delegate = self;
         catImageCollectionView.alwaysBounceHorizontal = YES;
         catImageCollectionView.layer.borderColor = [UIColor blackColor].CGColor;
-        catImageCollectionView.layer.borderWidth = 0.5f;
+        catImageCollectionView.layer.borderWidth = 1;
         
         layout.itemSize = CGSizeMake(50, 50);
         layout.minimumInteritemSpacing = 0;
@@ -412,9 +538,13 @@
     if (incomeOrExpenseSegmentedControl == nil){
         NSArray *array = @[@"Орлого",@"Зарлага"];
         incomeOrExpenseSegmentedControl = [[UISegmentedControl alloc] initWithItems:array];
-        incomeOrExpenseSegmentedControl.frame = CGRectMake(SCREEN_WIDTH/4, 335, SCREEN_WIDTH/2, 20);
+        incomeOrExpenseSegmentedControl.frame = CGRectMake(SCREEN_WIDTH/4, 340, SCREEN_WIDTH/2, 30);
         incomeOrExpenseSegmentedControl.backgroundColor = [UIColor whiteColor];
         [incomeOrExpenseSegmentedControl addTarget:self action:@selector(incomeOrExpenseSegmentedControlChanged:) forControlEvents: UIControlEventValueChanged];
+        NSDictionary *attributes = [NSDictionary dictionaryWithObject:FONT_NORMAL_SMALL
+                                                               forKey:NSFontAttributeName];
+        [incomeOrExpenseSegmentedControl setTitleTextAttributes:attributes
+                                                forState:UIControlStateNormal];
         incomeOrExpenseSegmentedControl.tintColor = [UIColor blueColor];
         incomeOrExpenseSegmentedControl.selectedSegmentIndex = 0;
         incomeOrExpenseSegmentedControl.layer.cornerRadius = 5;
@@ -424,13 +554,11 @@
 
 - (UIButton *)addButton {
     if (addButton == nil) {
-        addButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/4, 365, SCREEN_WIDTH/2, 25)];
-        //        [addButton setImage:[UIImage imageNamed:@"baraa_add"] forState:UIControlStateNormal];
+        addButton = [[MyButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/4, 385, SCREEN_WIDTH/2, 34)];
         [addButton setTitle:@"Нэмэх" forState:UIControlStateNormal];
-        addButton.layer.borderWidth = 0.3f;
+        addButton.layer.borderWidth = 1;
         addButton.layer.cornerRadius = 4;
         addButton.titleLabel.font = FONT_NORMAL_SMALL;
-        [addButton setTitleColor:BLACK_COLOR forState:UIControlStateNormal];
         [addButton addTarget:self action:@selector(addButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     return addButton;
@@ -438,13 +566,11 @@
 
 - (UIButton *)resetButton {
     if (resetButton == nil) {
-        resetButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/4, 400, SCREEN_WIDTH/2, 25)];
-        //        [addButton setImage:[UIImage imageNamed:@"baraa_add"] forState:UIControlStateNormal];
+        resetButton = [[MyButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/4, 435, SCREEN_WIDTH/2, 34)];
         [resetButton setTitle:@"Reset" forState:UIControlStateNormal];
-        resetButton.layer.borderWidth = 0.3f;
+        resetButton.layer.borderWidth = 1;
         resetButton.layer.cornerRadius = 4;
         resetButton.titleLabel.font = FONT_NORMAL_SMALL;
-        [resetButton setTitleColor:BLACK_COLOR forState:UIControlStateNormal];
         [resetButton addTarget:self action:@selector(resetButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     return resetButton;

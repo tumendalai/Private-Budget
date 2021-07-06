@@ -1,1 +1,11 @@
-../../../../CorePlot/framework/iPhoneOnly/CPTGraphHostingView.h
+#import "CPTDefinitions.h"
+
+@class CPTGraph;
+
+@interface CPTGraphHostingView : UIView
+
+@property (nonatomic, readwrite, strong, nullable) CPTGraph *hostedGraph;
+@property (nonatomic, readwrite, assign) BOOL collapsesLayers;
+@property (nonatomic, readwrite, assign) BOOL allowPinchScaling;
+
+@end

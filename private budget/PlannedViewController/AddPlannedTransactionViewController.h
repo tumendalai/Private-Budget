@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSArray *plannedTransactionArray;
 @property (nonatomic, strong) NSArray *categoryArray;
 @property (nonatomic, strong) UITableView *plannedTransactionsTableView;
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIScrollView *pScrollView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UITextField *amountTextfield;
 @property (nonatomic, strong) UILabel *dueDateLabel;
@@ -30,4 +30,6 @@
 @property (nonatomic, strong) UITextField *receiverTextfield;
 @property (nonatomic, strong) NSIndexPath *selectedItemIndexPath;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+-(void)reload;
 @end

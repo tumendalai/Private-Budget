@@ -1,9 +1,9 @@
 //
 //  ProductCell.m
-//  iRestaurantRepo
+//  private budget
 //
-//  Created by Sodtseren Enkhee on 2/13/14.
-//  Copyright (c) 2014 Sodtseren Enkhee. All rights reserved.
+//  Created by tuguldur purevnyam on 29.10.15.
+//  Copyright © 2015 tuguldur purevnyam. All rights reserved.
 //
 
 #import "CategoryImageCell.h"

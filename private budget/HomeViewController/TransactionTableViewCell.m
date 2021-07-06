@@ -2,7 +2,7 @@
 //  TransactionTableViewCell.m
 //  private budget
 //
-//  Created by Enkhdulguun on 11/22/15.
+//  Created by tuguldur purevnyam on 29.10.15.
 //  Copyright © 2015 tuguldur purevnyam. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) UIView *zuraasView;
 @property (nonatomic, strong) UIImageView *smallImageView;
+@property (nonatomic, strong) UIImageView *plusMinusImageView;
 @end
 
 @implementation TransactionTableViewCell
@@ -28,6 +29,7 @@
 @synthesize zuraasView;
 @synthesize containerView;
 @synthesize smallImageView;
+@synthesize plusMinusImageView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -40,6 +42,7 @@
         [self.containerView addSubview:self.amountLabel];
         [self.containerView addSubview:self.descriptionLabel];
         [self.containerView addSubview:self.smallImageView];
+        [self.containerView addSubview:self.plusMinusImageView];
         [self.contentView addSubview:self.zuraasView];
         
     }
@@ -50,28 +53,30 @@
     [super layoutSubviews];
     
     if (indexPath.row % 2 != 0) {
-//        self.contentView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.7f];
-    } else {
         self.contentView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5f];
-    }
-    
-    if (self.transaction.is_income.boolValue) {
-        self.containerView.frame = CGRectMake(0, 0, SCREEN_WIDTH/2, self.contentView.bounds.size.height);
-        
     } else {
-        self.containerView.frame = CGRectMake(SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2, self.contentView.bounds.size.height);
+        self.contentView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.01f];
     }
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSLocale *enUSLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [formatter setLocale:enUSLocale];
-    
-    self.dateLabel.text = [formatter stringFromDate:self.transaction.date];
-    self.receiverLabel.text = self.transaction.receiver;
-    self.amountLabel.text =[NSString stringWithFormat:@"%@%@%@",self.transaction.is_income.boolValue ? @"+":@"-",self.transaction.amount,self.transaction.tran_currency.symbol];
-    self.descriptionLabel.text = self.transaction.transaction_description;
-    [self.smallImageView setImage:[UIImage imageNamed:self.transaction.tran_category.image]];
+    if (self.transaction){
+        if (self.transaction.is_income.boolValue) {
+            self.containerView.frame = CGRectMake(0, 0, SCREEN_WIDTH/2, self.contentView.bounds.size.height);
+            [self.plusMinusImageView setImage:[UIImage imageNamed:@"plus"]];
+        } else {
+            self.containerView.frame = CGRectMake(SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2, self.contentView.bounds.size.height);
+            [self.plusMinusImageView setImage:[UIImage imageNamed:@"minus"]];
+        }
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSLocale *enUSLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+        [formatter setLocale:enUSLocale];
+        
+        self.dateLabel.text = [formatter stringFromDate:self.transaction.date];
+        self.receiverLabel.text = self.transaction.receiver;
+        self.amountLabel.text =[NSString stringWithFormat:@"%@%@%@",self.transaction.is_income.boolValue ? @"+":@"-",self.transaction.amount,self.transaction.tran_currency.symbol];
+        self.descriptionLabel.text = self.transaction.transaction_description;
+        [self.smallImageView setImage:[UIImage imageNamed:self.transaction.tran_category.image]];
+    }
 }
 
 #pragma mark -
@@ -79,46 +84,54 @@
 
 - (UIImageView *)smallImageView {
     if (smallImageView == nil) {
-        smallImageView = [[UIImageView alloc] initWithFrame:CGRectMake(115, 5, 40, 40)];
+        smallImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 40, 40)];
         smallImageView.backgroundColor = CLEAR_COLOR;
     }
     return smallImageView;
 }
 
+- (UIImageView *)plusMinusImageView {
+    if (plusMinusImageView == nil) {
+        plusMinusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 3, 10, 10)];
+        plusMinusImageView.backgroundColor = CLEAR_COLOR;
+    }
+    return plusMinusImageView;
+}
+
 - (UILabel *)dateLabel {
     if (dateLabel == nil) {
-        dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 15)];
+        dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 0, 120, 15)];
         dateLabel.backgroundColor = CLEAR_COLOR;
         dateLabel.textColor = BLACK_COLOR;
-        dateLabel.font = FONT_NORMAL_SMALL;
+        dateLabel.font = FONT_NORMAL_SMALLER;
     }
     return dateLabel;
 }
 - (UILabel *)receiverLabel {
     if (receiverLabel == nil) {
-        receiverLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 45, SCREEN_WIDTH/2, 15)];
+        receiverLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 45, SCREEN_WIDTH/2, 15)];
         receiverLabel.backgroundColor = CLEAR_COLOR;
         receiverLabel.textColor = BLACK_COLOR;
-        receiverLabel.font = FONT_NORMAL_SMALL;
+        receiverLabel.font = FONT_NORMAL_SMALLER;
     }
     return receiverLabel;
 }
 - (UILabel *)amountLabel {
     if (amountLabel == nil) {
-        amountLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, SCREEN_WIDTH/2, 15)];
+        amountLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 30, SCREEN_WIDTH/2, 15)];
         amountLabel.backgroundColor = CLEAR_COLOR;
         amountLabel.textColor = BLACK_COLOR;
-        amountLabel.font = FONT_NORMAL_SMALL;
+        amountLabel.font = FONT_NORMAL_SMALLER;
         amountLabel.numberOfLines = 2;
     }
     return amountLabel;
 }
 - (UILabel *)descriptionLabel {
     if (descriptionLabel == nil) {
-        descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 15, SCREEN_WIDTH/2, 15)];
+        descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 15, SCREEN_WIDTH/2, 15)];
         descriptionLabel.backgroundColor = CLEAR_COLOR;
         descriptionLabel.textColor = BLACK_COLOR;
-        descriptionLabel.font = FONT_NORMAL_SMALL;
+        descriptionLabel.font = FONT_NORMAL_SMALLER;
         descriptionLabel.numberOfLines = 2;
     }
     return descriptionLabel;
@@ -126,7 +139,7 @@
 
 -(UIView*)zuraasView{
     if (zuraasView == nil) {
-        zuraasView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2, 0, 0.5, 60)];
+        zuraasView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2, 0, 1, 60)];
         zuraasView.backgroundColor = BLACK_COLOR;
     }
     return zuraasView;

@@ -182,6 +182,7 @@
         [_textLayer setString:@"0"];
         [_textLayer setAlignmentMode:kCAAlignmentCenter];
         [_textLayer setForegroundColor:[[UIColor colorWithRed:178/255.0 green:178/255. blue:178/255.0 alpha:1.0] CGColor]];
+        [_textLayer setForegroundColor:[[UIColor blueColor] CGColor]];
        _textLayer.hidden = YES;
 
     }
@@ -197,7 +198,7 @@
     CGFloat textWidth = self.bounds.size.width;
   
     [_chartLine addSublayer:self.textLayer];
-    [self.textLayer setFontSize:18.0];
+    [self.textLayer setFontSize:10.0];
   
     [self.textLayer setString:[[NSString alloc]initWithFormat:@"%0.f",grade*self.maxDivisor]];
   
@@ -215,6 +216,7 @@
   
     [self.textLayer setFrame:CGRectMake((textWidth-size.width)/2.0,verticalY, size.width,size.height)];
     self.textLayer.contentsScale = [UIScreen mainScreen].scale;
+//    self.textLayer.transform = CATransform3DMakeRotation(M_PI_2 *3, 0.0, 0.0, 1.0);
 
 }
 

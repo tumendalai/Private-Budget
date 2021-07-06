@@ -1,9 +1,9 @@
 //
 //  DashboardLegendScrollView.h
-//  iRestaurantRepo
+//  private budget
 //
-//  Created by Sodtseren Enkhee on 6/13/14.
-//  Copyright (c) 2014 Sodtseren Enkhee. All rights reserved.
+//  Created by tuguldur purevnyam on 29.10.15.
+//  Copyright © 2015 tuguldur purevnyam. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -17,6 +17,11 @@
 @property (nonatomic, strong) UIFont    *valueFont;
 
 @property (nonatomic, assign) CGFloat   nameOffset;
+@property (nonatomic, strong) UIScrollView *myScrollView;
+
+@property (nonatomic, assign) BOOL is_pie_chart;
+@property (nonatomic, assign) BOOL is_numbered;
+@property (nonatomic, assign) NSTextAlignment nameTextAlignment;
 
 - (void)reloadData;
 

@@ -9,7 +9,6 @@
 #import "PlannedTransactionViewController.h"
 #import "PlannedTransactionTableViewCell.h"
 #import "AddPlannedTransactionViewController.h"
-#import "PlannedTransaction.h"
 
 @interface PlannedTransactionViewController ()<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
@@ -30,7 +29,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     [self configureView];
-    [self testMethod];
+    [self getPlannedTransactions];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,12 +42,12 @@
     [self.view addSubview:self.addButton];
 }
 
--(void)testMethod{
+-(void)getPlannedTransactions{
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DBPlannedTransaction"];
     
     // Add Sort Descriptors
-    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
+    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"day" ascending:YES]]];
     
     // Initialize Fetched Results Controller
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
@@ -64,6 +63,10 @@
         NSLog(@"Unable to perform fetch.");
         NSLog(@"%@, %@", error, error.localizedDescription);
     }
+}
+
+-(void)reload{
+    [self.plannedTransactionsTableView reloadData];
 }
 
 #pragma mark -
@@ -103,7 +106,7 @@
 
 -(void)addButtonClicked:(UIButton *)button{
     addPlannedTransactionViewController = [[AddPlannedTransactionViewController alloc] initWithNibName:nil bundle:nil];
-    
+    [addPlannedTransactionViewController setManagedObjectContext:self.managedObjectContext];
     [self.navigationController  pushViewController:addPlannedTransactionViewController animated:YES];
 }
 

@@ -1,1 +1,5 @@
-../../../../CorePlot/framework/Source/_CPTAnimationCGFloatPeriod.h
+#import "CPTAnimationPeriod.h"
+
+@interface _CPTAnimationCGFloatPeriod : CPTAnimationPeriod
+
+@end

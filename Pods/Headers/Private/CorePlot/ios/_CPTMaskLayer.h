@@ -1,1 +1,5 @@
-../../../../CorePlot/framework/Source/_CPTMaskLayer.h
+#import "CPTLayer.h"
+
+@interface CPTMaskLayer : CPTLayer
+
+@end

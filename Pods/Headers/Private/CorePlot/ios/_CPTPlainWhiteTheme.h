@@ -1,1 +1,5 @@
-../../../../CorePlot/framework/Source/_CPTPlainWhiteTheme.h
+#import "_CPTXYTheme.h"
+
+@interface _CPTPlainWhiteTheme : _CPTXYTheme
+
+@end

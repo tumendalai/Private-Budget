@@ -22,6 +22,14 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Mogul Avanti Bold Italic.ttf</string>
+		<string>Mogul Avanti Bold.ttf</string>
+		<string>Mogul Avanti Italic.ttf</string>
+		<string>Mogul Avanti.ttf</string>
+		<string>Digiface.ttf</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -31,14 +39,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Mogul Avanti Bold Italic.ttf</string>
-		<string>Mogul Avanti Bold.ttf</string>
-		<string>Mogul Avanti Italic.ttf</string>
-		<string>Mogul Avanti.ttf</string>
-		<string>Digiface.ttf</string>
 	</array>
 </dict>
 </plist>

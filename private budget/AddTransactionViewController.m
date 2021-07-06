@@ -13,7 +13,7 @@
 
 @interface AddTransactionViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIScrollView *tScrollView;
 @property (nonatomic, strong) UITextField  *descTextfield;
 @property (nonatomic, strong) UITextField *resTextfield;
 @property (nonatomic, strong) UITextField *amountTextfield;
@@ -25,13 +25,13 @@
 @property (strong, nonatomic) NSBlockOperation *blockOperation;
 @property (strong, nonatomic) NSMutableArray *sectionChanges;
 @property (strong, nonatomic) NSMutableArray *itemChanges;
-
+@property (strong, nonatomic) UITapGestureRecognizer *tap;
 
 @end
 
 @implementation AddTransactionViewController
 @synthesize saveButtonClicked;
-@synthesize scrollView;
+@synthesize tScrollView;
 @synthesize descTextfield;
 @synthesize resTextfield;
 @synthesize amountTextfield;
@@ -41,11 +41,34 @@
 @synthesize selectedItemIndexPath;
 @synthesize sectionChanges;
 @synthesize itemChanges;
+@synthesize tap;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self getCategories];
+    [self refresh_data];
+    [self.backButton setHidden:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidHide:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.view removeGestureRecognizer:self.tap];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,13 +79,82 @@
 -(void)configureView{
     [super configureView];
     [self.view addSubview:self.saveButton];
-    [self.view addSubview:self.scrollView];
-    [self.scrollView addSubview:self.descTextfield];
-    [self.scrollView addSubview:self.resTextfield];
-    [self.scrollView addSubview:self.amountTextfield];
-    [self.scrollView addSubview:self.catCollectionView];
+    [self.view addSubview:self.tScrollView];
+    [self.tScrollView addSubview:self.descTextfield];
+    [self.tScrollView addSubview:self.resTextfield];
+    [self.tScrollView addSubview:self.amountTextfield];
+    [self.tScrollView addSubview:self.catCollectionView];
     
-    self.scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, 370);
+    self.tScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, 370);
+}
+
+#pragma mark -
+#pragma mark KeyboardDelegate
+#pragma mark -
+- (void)keyboardDidShow: (NSNotification *) notif {
+    [self.view addGestureRecognizer:self.tap];
+    
+    // Do something here
+    UIScrollView *scrollView = self.tScrollView;
+    
+    NSDictionary *userInfo = [notif userInfo];
+    
+    NSValue *animationCurveObject = [userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey];
+    NSValue *animationDurationObject = [userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSValue *keyboardEndRectObject = [userInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    NSUInteger animationCurve = 0;
+    double animationDuration = 0.0f;
+    CGRect keyboardEndRect = CGRectMake(0, 0, 0, 0);
+    
+    [animationCurveObject getValue:&animationCurve];
+    [animationDurationObject getValue:&animationDuration];
+    [keyboardEndRectObject getValue:&keyboardEndRect];
+    
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    keyboardEndRect = [self.view convertRect:keyboardEndRect fromView:window];
+    
+    [UIView beginAnimations:@"changeTableViewContentInset" context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    [UIView setAnimationCurve:(UIViewAnimationCurve)animationCurve];
+    
+    CGRect intersectionOfKeyboardRectAndWindowRect = CGRectIntersection(window.frame, keyboardEndRect);
+    CGFloat bottomInset = intersectionOfKeyboardRectAndWindowRect.size.height;
+    scrollView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, bottomInset, 0.0f);
+    
+    [UIView commitAnimations];
+}
+
+- (void)keyboardDidHide: (NSNotification *) notif {
+    [self.view removeGestureRecognizer:self.tap];
+    
+    // Do something here
+    UIScrollView *scrollView = self.tScrollView;
+    
+    if (UIEdgeInsetsEqualToEdgeInsets(scrollView.contentInset, UIEdgeInsetsZero))
+        return;
+    
+    NSDictionary *userInfo = [notif userInfo];
+    
+    NSValue *animationCurveObject = [userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey];
+    NSValue *animationDurationObject = [userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSValue *keyboardEndRectObject = [userInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    NSUInteger animationCurve = 0;
+    double animationDuration = 0.0f;
+    CGRect keyboardEndRect = CGRectMake(0, 0, 0, 0);
+    
+    [animationCurveObject getValue:&animationCurve];
+    [animationDurationObject getValue:&animationDuration];
+    [keyboardEndRectObject getValue:&keyboardEndRect];
+    
+    [UIView beginAnimations:@"changeTableViewContentInset" context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    [UIView setAnimationCurve:(UIViewAnimationCurve)animationCurve];
+    
+    scrollView.contentInset = UIEdgeInsetsZero;
+    
+    [UIView commitAnimations];
 }
 
 #pragma mark -
@@ -84,7 +176,8 @@
     newTransaction.is_income = category.income;
     newTransaction.receiver = self.resTextfield.text;
     newTransaction.transaction_description = self.descTextfield.text;
-    newTransaction.tran_category = category;
+//    newTransaction.tran_category = category;
+    [category addTransactionObject:newTransaction];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DBCurrency"];
     
@@ -101,12 +194,11 @@
         
         NSError *error = nil;
         
-        if (![newTransaction.managedObjectContext save:&error]) {
+        if (![category.managedObjectContext save:&error]) {
             NSLog(@"Unable to save managed object context.");
             NSLog(@"%@, %@", error, error.localizedDescription);
         } else {
-            //        [self.catCollectionView reloadData];
-            selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self refresh_data];
         }
     } else {
         NSLog(@"Error fetching data.");
@@ -114,24 +206,43 @@
     }
 }
 
+#pragma mark - tap
+- (void)handleTap:(UITapGestureRecognizer *)recognizer {
+    [self.view endEditing:YES];
+}
+
 #pragma mark -
 #pragma mark User
 
 - (BOOL)formValidation {
     if (selectedItemIndexPath == nil) {
-//                [SEUtils showAlert:NSLocalizedString(@"Зураг сонгоно уу!", nil)];
+        [[[UIAlertView alloc] initWithTitle:@"Анхаар" message:@"Ангилал сонгоогүй байна!" delegate:nil cancelButtonTitle:@"За" otherButtonTitles:nil] show];
         return NO;
     }
     if (self.amountTextfield.text.length == 0) {
+        [[[UIAlertView alloc] initWithTitle:@"Анхаар" message:@"Мөнгөн дүн оруулна уу!" delegate:nil cancelButtonTitle:@"За" otherButtonTitles:nil] show];
         return NO;
     }
     if (self.descTextfield.text.length == 0) {
+        [[[UIAlertView alloc] initWithTitle:@"Анхаар" message:@"Утга оруулна уу!" delegate:nil cancelButtonTitle:@"За" otherButtonTitles:nil] show];
         return NO;
     }
     if (self.resTextfield.text.length == 0) {
+        [[[UIAlertView alloc] initWithTitle:@"Анхаар" message:@"Хүлээн авагч оруулна уу!" delegate:nil cancelButtonTitle:@"За" otherButtonTitles:nil] show];
         return NO;
     }
     return YES;
+}
+
+-(void)refresh_data{
+    [self.view endEditing:YES];
+    selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSArray *sections = [self.categoryFetchedResultsController sections];
+    id<NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:0];
+    
+    if([sectionInfo numberOfObjects] > 0)
+        [self.catCollectionView selectItemAtIndexPath:selectedItemIndexPath animated:YES scrollPosition:UICollectionViewScrollPositionLeft];
+    self.descTextfield.text = self.resTextfield.text = self.amountTextfield.text = @"";
 }
 
 - (void)getCategories {
@@ -155,8 +266,6 @@
         NSLog(@"Unable to perform fetch.");
         NSLog(@"%@, %@", error, error.localizedDescription);
     }
-    
-    selectedItemIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 }
 
 #pragma mark -
@@ -290,35 +399,40 @@
     } else {
         self.selectedItemIndexPath = indexPath;
     }
-    [collectionView reloadItemsAtIndexPaths:indexPaths];
+    [collectionView reloadData];
 }
 
 
 #pragma mark -
 #pragma mark Getters
-- (UIScrollView *)scrollView {
-    if (scrollView == nil) {
-        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-60)];
-        scrollView.backgroundColor = CLEAR_COLOR;
-        scrollView.delegate = self;
-        scrollView.showsVerticalScrollIndicator = NO;
-        scrollView.showsHorizontalScrollIndicator = NO;
-        scrollView.decelerationRate = 0.1f;
-        scrollView.pagingEnabled = NO;
-        scrollView.alwaysBounceVertical = YES;
+- (UIScrollView *)tScrollView {
+    if (tScrollView == nil) {
+        tScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-60)];
+        tScrollView.backgroundColor = CLEAR_COLOR;
+        tScrollView.delegate = self;
+        tScrollView.showsVerticalScrollIndicator = NO;
+        tScrollView.showsHorizontalScrollIndicator = NO;
+        tScrollView.decelerationRate = 0.1f;
+        tScrollView.pagingEnabled = NO;
+        tScrollView.alwaysBounceVertical = YES;
     }
-    return scrollView;
+    return tScrollView;
+}
+
+-(UITapGestureRecognizer *)tap{
+    if (tap == nil) {
+        tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    }
+    return tap;
 }
 
 - (UIButton *)saveButton {
     if (saveButton == nil) {
-        saveButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-114, 25, 100, 25)];
-        //        [saveButton setImage:[UIImage imageNamed:@"baraa_add"] forState:UIControlStateNormal];
+        saveButton = [[MyButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-114, 25, 100, 34)];
         [saveButton setTitle:@"Хадгалах" forState:UIControlStateNormal];
-        saveButton.layer.borderWidth = 0.3f;
+        saveButton.layer.borderWidth = 1;
         saveButton.layer.cornerRadius = 4;
         saveButton.titleLabel.font = FONT_NORMAL_SMALL;
-        [saveButton setTitleColor:BLACK_COLOR forState:UIControlStateNormal];
         [saveButton addTarget:self action:@selector(saveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     return saveButton;
@@ -326,17 +440,14 @@
 
 - (UITextField *)amountTextfield {
     if (amountTextfield == nil) {
-        amountTextfield = [[UITextField alloc] initWithFrame:CGRectMake(20, 10, SCREEN_WIDTH-40, 20)];
+        amountTextfield = [[MyTextField alloc] initWithFrame:CGRectMake(20, 10, SCREEN_WIDTH-40, 30)];
         amountTextfield.layer.borderColor = [UIColor blackColor].CGColor;
-        amountTextfield.layer.borderWidth = 0.2f;
-        amountTextfield.layer.cornerRadius = 3.0f;
         amountTextfield.backgroundColor = [UIColor whiteColor];
-        //        descTextfield.delegate = self;
         amountTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
         amountTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
-        //        [descTextfield addTarget:self action:@selector(textDidChange) forControlEvents:UIControlEventEditingChanged];
+        amountTextfield.keyboardType = UIKeyboardTypeNumberPad;
         amountTextfield.font = FONT_NORMAL_SMALL;
-        amountTextfield.placeholder = @" Дүн";
+        amountTextfield.placeholder = @"Дүн";
     }
     return amountTextfield;
 }
@@ -345,13 +456,13 @@
     
     if (catCollectionView == nil) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        catCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, 165) collectionViewLayout:layout];
+        catCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 60, SCREEN_WIDTH, 165) collectionViewLayout:layout];
         catCollectionView.backgroundColor = CLEAR_COLOR;
         catCollectionView.dataSource = self;
         catCollectionView.delegate = self;
         catCollectionView.alwaysBounceHorizontal = YES;
         catCollectionView.layer.borderColor = [UIColor blackColor].CGColor;
-        catCollectionView.layer.borderWidth = 0.5f;
+        catCollectionView.layer.borderWidth = 1;
         
         layout.itemSize = CGSizeMake(90, 80);
         layout.minimumInteritemSpacing = 5;
@@ -366,34 +477,26 @@
 
 - (UITextField *)descTextfield {
     if (descTextfield == nil) {
-        descTextfield = [[UITextField alloc] initWithFrame:CGRectMake(20, 250, SCREEN_WIDTH-40, 20)];
+        descTextfield = [[MyTextField alloc] initWithFrame:CGRectMake(20, 250, SCREEN_WIDTH-40, 30)];
         descTextfield.layer.borderColor = [UIColor blackColor].CGColor;
-        descTextfield.layer.borderWidth = 0.2f;
-        descTextfield.layer.cornerRadius = 3.0f;
         descTextfield.backgroundColor = [UIColor whiteColor];
-        //        descTextfield.delegate = self;
         descTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
         descTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
-        //        [descTextfield addTarget:self action:@selector(textDidChange) forControlEvents:UIControlEventEditingChanged];
         descTextfield.font = FONT_NORMAL_SMALL;
-        descTextfield.placeholder = @" Утга";
+        descTextfield.placeholder = @"Утга";
     }
     return descTextfield;
 }
 
 - (UITextField *)resTextfield {
     if (resTextfield == nil) {
-        resTextfield = [[UITextField alloc] initWithFrame:CGRectMake(20, 280, SCREEN_WIDTH-40, 20)];
+        resTextfield = [[MyTextField alloc] initWithFrame:CGRectMake(20, 300, SCREEN_WIDTH-40, 30)];
         resTextfield.layer.borderColor = [UIColor blackColor].CGColor;
-        resTextfield.layer.borderWidth = 0.2f;
-        resTextfield.layer.cornerRadius = 3.0f;
         resTextfield.backgroundColor = [UIColor whiteColor];
-        //        descTextfield.delegate = self;
         resTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
         resTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
-        //        [descTextfield addTarget:self action:@selector(textDidChange) forControlEvents:UIControlEventEditingChanged];
         resTextfield.font = FONT_NORMAL_SMALL;
-        resTextfield.placeholder = @" Хэнд";
+        resTextfield.placeholder = @"Хэнд";
     }
     return resTextfield;
 }

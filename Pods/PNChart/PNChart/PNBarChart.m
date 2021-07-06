@@ -175,7 +175,7 @@
                 label.textColor = _labelTextColor;
                 [label setTextAlignment:NSTextAlignmentCenter];
                 label.text = labelText;
-                //[label sizeToFit];
+//                [label sizeToFit];
                 CGFloat labelXPosition;
                 if (_rotateForXAxisText){
                     label.transform = CGAffineTransformMakeRotation(M_PI / 4);
@@ -232,6 +232,10 @@
 
                 }
             }
+            
+            if (index%2 == 1) {
+                barXPosition -= 10;
+            }
 
             bar = [[PNBar alloc] initWithFrame:CGRectMake(barXPosition, //Bar X position
                                                           self.frame.size.height - chartCavanHeight - kXLabelHeight - _chartMarginTop , //Bar Y position
@@ -253,6 +257,12 @@
             // Add gradient
             if (self.isGradientShow) {
              bar.barColorGradientStart = bar.barColor;
+            }
+            
+            if (index%2 == 0) {
+                bar.barColor = [UIColor greenColor];
+            } else {
+                bar.barColor = PNGreen;
             }
 
             //For Click Index

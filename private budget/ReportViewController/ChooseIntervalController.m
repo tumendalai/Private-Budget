@@ -2,7 +2,7 @@
 //  ChooseIntervalController.m
 //  private budget
 //
-//  Created by Enkhdulguun on 12/14/15.
+//  Created by tuguldur purevnyam on 29.10.15.
 //  Copyright © 2015 tuguldur purevnyam. All rights reserved.
 //
 
@@ -48,6 +48,7 @@
     }
     
     cell.textLabel.text = [self.stringArray objectAtIndex:indexPath.row];
+    cell.textLabel.font = FONT_NORMAL_SMALL;
     
     return cell;
 }

@@ -1,11 +1,10 @@
 //
 //  ProductCell.m
-//  iRestaurantRepo
+//  private budget
 //
-//  Created by Sodtseren Enkhee on 2/13/14.
-//  Copyright (c) 2014 Sodtseren Enkhee. All rights reserved.
+//  Created by tuguldur purevnyam on 29.10.15.
+//  Copyright © 2015 tuguldur purevnyam. All rights reserved.
 //
-
 #import "CategoryCell.h"
 
 #define MY_SIZE     CGSizeMake(90, 80)
@@ -50,7 +49,7 @@
 #pragma mark Getters
 - (UILabel *)nameLabel {
     if (nameLabel == nil) {
-        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, MY_SIZE.width-20, 15)];
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, MY_SIZE.width-20, 15)];
         nameLabel.backgroundColor = CLEAR_COLOR;
         nameLabel.textColor = BLACK_COLOR;
         nameLabel.font = FONT_NORMAL_SMALL;

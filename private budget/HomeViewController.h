@@ -13,6 +13,13 @@
 
 @interface HomeViewController : MainAbstractViewController
 
+@property (strong, nonatomic) NSDate  *selected_start_date;
+@property (strong, nonatomic) NSDate *selected_end_date;
+
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+-(void)getTransactions:(NSDate *)beginDate end:(NSDate*)endDates;
+
+-(void)reload;
 
 @end
